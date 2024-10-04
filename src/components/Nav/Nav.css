@@ -1,0 +1,9 @@
+.nav {
+    width: 135px;
+    height: 844px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    /* justify-content: center; */
+    background-color: var(--background-secondary);
+}
