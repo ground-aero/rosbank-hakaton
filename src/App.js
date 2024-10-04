@@ -1,3 +1,4 @@
+import { Routes, Route } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 import './globals.css';
@@ -6,13 +7,32 @@ import Main from './components/Main/Main';
 
 function App() {
   return (
-    // <div className="App">
+
     <>
-      <Nav/>
-      <Main/>
+      <Routes>
+        <Route exact path='/' index={true}
+            element={
+                <>
+                    {/* <Header loggedIn={loggedIn} type='land'/> */}
+                    <Nav/>
+                    <Main type='charts'/>
+                </>
+            }
+        />
+        <Route path='/docs'
+            element={
+                <>
+                    <Nav/>
+                    <Main type='docs'/>
+                </>
+            }
+        />
+        
+        {/* <Route path='*' element={<NotFound/>}/> */}
+
+    </Routes>
     </>
 
-    // </div>
   );
 }
 
