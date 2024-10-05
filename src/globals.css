@@ -2,19 +2,23 @@
   --max-width: 100%; /* Базовое значение для мобильных устройств */
   --border-radius: 4px;
   --font-mono: "Roboto", "Roboto Mono", monospace;
-  
+
+  --color-red: #E10D34;
+
   --text-color-dark: #42434B;
   --text-color-middle: #99999E;
 
-  --background-primary: rgba(255, 255, 255);
+  --background-primary: #F9F9F9;
   --background-secondary: #42434B;
 
-  /* --primary-color: #0084C2;
+  --primary-color: #0084C2;
   --primary-color-dark: #006392;
-  --secondary-color: #2c333c; */
+  --secondary-color: #2c333c;
 
   --card-rgb: 255, 255, 255;
   --card-border-rgb: 131, 134, 135;
+
+  --btn-border-light: #E1E1E1;
 }
 
 * {
@@ -36,12 +40,21 @@ body {
 
 body {
   min-height: 100vh;
+  background-color: var(--background-primary);
   color: rgb(var(--text-color-dark));
   font-size: 15px; /* Базовый размер шрифта */
+  line-height: 20px;
 }
 
 #root {
   display: flex;
+}
+
+h1 {
+  font-size: 22px;
+  line-height: 24px;
+  font-weight: 600;
+  color: var(--text-color-dark);
 }
 
 a {

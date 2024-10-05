@@ -1,38 +1,25 @@
-import { Routes, Route } from 'react-router-dom';
-import logo from './logo.svg';
-import './App.css';
-import './globals.css';
-import Nav from './components/Nav/Nav';
-import Main from './components/Main/Main';
+import { Routes, Route } from 'react-router-dom'
+import logo from './logo.svg'
+import './App.css'
+import './globals.css'
+import Layout from './components/Layout/Layout'
+import NotFound from './components/NotFound/NotFound'
 
 function App() {
   return (
-
     <>
       <Routes>
+
         <Route exact path='/' index={true}
-            element={
-                <>
-                    {/* <Header loggedIn={loggedIn} type='land'/> */}
-                    <Nav/>
-                    <Main type='charts'/>
-                </>
-            }
-        />
-        <Route path='/docs'
-            element={
-                <>
-                    <Nav/>
-                    <Main type='docs'/>
-                </>
-            }
-        />
-        
-        {/* <Route path='*' element={<NotFound/>}/> */}
+            element={<Layout/>}>
+            {/*<Route index element={<Users />} />*/}
+            {/*<Route path="settings" element={<Settings />} />*/}
+        </Route>
+
+        <Route path='*' element={<NotFound/>}/>
 
     </Routes>
     </>
-
   );
 }
 

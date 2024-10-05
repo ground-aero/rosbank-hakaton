@@ -1,0 +1,22 @@
+.btns {
+    display: flex;
+    align-items: center;
+}
+
+.btn {
+    width: 114px;
+    height: 48px;
+    background-color: transparent;
+    border: 1px solid var(--btn-border-light);
+    border-radius: 12px;
+    margin-right: 12px;
+}
+
+.btn__team {
+    cursor: pointer;
+}
+
+.charts_filter {
+    width: 32px;
+    height: 32px;
+}
