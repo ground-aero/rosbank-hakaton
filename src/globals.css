@@ -7,9 +7,13 @@
 
   --text-color-dark: #42434B;
   --text-color-middle: #99999E;
+  --text-color-light: #E1E1E1;
 
   --background-primary: #F9F9F9;
-  --background-secondary: #42434B;
+  --background-secondary: #EFEFEF;
+  --background-tertiary: #99999E;
+  --background-quaternary: #42434B;
+  --background-quaternary-hover: #57575d;
 
   --primary-color: #0084C2;
   --primary-color-dark: #006392;
@@ -41,9 +45,10 @@ body {
 body {
   min-height: 100vh;
   background-color: var(--background-primary);
-  color: rgb(var(--text-color-dark));
-  font-size: 15px; /* Базовый размер шрифта */
+  font-size: 12px; /* Базовый размер шрифта */
+  font-weight: 400;
   line-height: 20px;
+  color: var(--text-color-dark);
 }
 
 #root {

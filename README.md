@@ -1,18 +1,14 @@
-# Getting Started with Create React App
+### Приложение 'Dashboard' - ROSBANK 
 
-## Available Scripts
+### Для запуска приложения в браузере, в Терминале использовать команды:
 
-In the project directory, you can run:
+##### `npm ci` - установка необходимых используемых зависимостей
 
-### `npm start`
+##### `npm run build` - для оптимальной сборки приложения
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+##### `npm start` - запустить среду локально на порту 3000
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm run build`
+#### Основной стек: ReactJS/CSS
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.

@@ -1,0 +1,10 @@
+.chartSkills {
+    position: relative;
+    width: 555px;
+    height: 411px;
+    padding: 20px 40px 20px 40px;
+    margin-top: 43px;
+    border-radius: 12px;
+    background-color: #FFF;
+    border: 1px solid var(--text-color-light);
+}

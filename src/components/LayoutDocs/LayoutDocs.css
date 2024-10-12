@@ -4,7 +4,7 @@
 
 .docs__column {
     min-width: 572px;
-    height: min-content;
+    flex: 1;
     padding-right: 97px;
 }
 

@@ -1,0 +1,18 @@
+.chart__subtitle {
+    font-size: 10px;
+}
+
+.chart__table {
+    padding-top: 24px;
+}
+
+.table__header {
+    width: 213px;
+    text-align: left;
+}
+
+.TEST-BTN {
+    padding: 10px;
+    background-color: #FFCE1B;
+    cursor: pointer;
+}

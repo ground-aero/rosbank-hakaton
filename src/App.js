@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom'
-import logo from './logo.svg'
 import './App.css'
 import './globals.css'
 import Layout from './components/Layout/Layout'
@@ -9,7 +8,6 @@ function App() {
   return (
     <>
       <Routes>
-
         <Route exact path='/' index={true}
             element={<Layout/>}>
             {/*<Route index element={<Users />} />*/}
@@ -17,7 +15,6 @@ function App() {
         </Route>
 
         <Route path='*' element={<NotFound/>}/>
-
     </Routes>
     </>
   );

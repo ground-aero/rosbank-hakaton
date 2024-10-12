@@ -1,0 +1,64 @@
+.chartStaff {
+    position: relative;
+    width: 670px;
+    min-height: 302px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 40px 20px 40px;
+    border-radius: 12px;
+    background-color: #FFF;
+    border: 1px solid var(--text-color-light);
+}
+
+.tab-content-chart {
+    height: 16px;
+    padding-top: 4px;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.scrollable-content {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.scrollable-content::-webkit-scrollbar {
+    width: 7px;
+}
+
+.scrollable-content::-webkit-scrollbar-track {
+    background: var(--background-secondary);
+}
+
+.scrollable-content::-webkit-scrollbar-thumb {
+    background: var(--background-tertiary);
+    border-radius: 4px;
+}
+
+.scrollable-content::-webkit-scrollbar-thumb:hover {
+    background: var(--background-quaternary-hover);
+}
+
+.tabs-chart {
+    width: 403px;
+    height: 20px;
+    display: flex;
+}
+
+.tab-chart {
+    color: var(--text-color-middle);
+    padding-right: 16px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.tab-chart:nth-child(n+2) {
+    padding-right: 0;
+}
+
+.tab-chart.active {
+    color: var(--text-color-dark);
+}
+

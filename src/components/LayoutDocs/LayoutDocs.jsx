@@ -14,6 +14,7 @@ function LayoutDocs() {
                     Средний балл SELECT AVG(оценка_) FROM df;
                     Количество уникальных навыков SELECT COUNT(DISTINCT навык) FROM df;</p>
             </div>
+            {/* column - 2 */}
             <div className="docs__column">
                 <h1 className="docs__header">Описание датасета</h1>
                 <p className="column__text">

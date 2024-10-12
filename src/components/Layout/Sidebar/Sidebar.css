@@ -1,0 +1,67 @@
+.sidebar {
+    width: 95px;
+    height: 844px;
+    display: flex;
+    justify-content: center;
+    background-color: var(--background-quaternary);
+    position: absolute;
+    top: 0;
+    left:0;
+}
+
+.sidebar__inner-bar {
+    width: 50px;
+    height: 747px;
+    margin-top: 74px;
+}
+
+.inner__half {
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inner__half:nth-child(2) {
+    justify-content: flex-end;
+}
+
+.btn__wrap {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    transition: background-color 0.35s ease;
+    margin-bottom: 8px;
+    border-radius: 12px;
+    border: none;
+}
+
+.inner__icon-bg {
+    width: 24px;
+    height: 24px;
+}
+
+.inner__user-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.btn__wrap:hover {
+    background-color: var(--background-quaternary-hover);
+}
+
+.btn__wrap.active {
+    background-color: var(--background-quaternary-hover);
+}
+
+.btn__wrap img {
+    width: 24px;
+    height: 24px;
+}
+
+
