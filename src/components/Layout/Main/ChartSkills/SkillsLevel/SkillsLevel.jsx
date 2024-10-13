@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 // import './SkillsLevel.css'
+import ChartLeftBars from '../../../../Charts/ChartLeftBars'
 
 function SkillsLevel() {
     const [isFetchingData, setFetchingData] = useState('false')
@@ -9,9 +10,9 @@ function SkillsLevel() {
     const fetchSkills = async () => {
         setFetchingData(true)
         // const db_url = 'https://jsonplaceholder.typicode.com/';
-        const db_url = 'http://127.0.0.1:8000/api/v1/dashboard/suitability_position/?team=5';
+        const db_url = 'http://127.0.0.1:8000/api/v1/dashboard/suitability_position';
         try {
-            let { data } = await axios.get(`${db_url}`, {
+            let { data } = await axios.get(`${db_url}/31/skills`, {
                 headers: {
                     'Accept': 'application/json',
                 },
@@ -27,6 +28,10 @@ function SkillsLevel() {
         }
     }
 
+    useEffect(() => {
+        fetchSkills()
+    }, [])
+
     const handleFetchClick = () => {
         fetchSkills()
     }
@@ -35,51 +40,15 @@ function SkillsLevel() {
         <div>
             <p className='chart__subtitle'>ШКАЛЫ УРОВНЕЙ НАВЫКОВ</p>
 
-
-
-            {/* <button onClick={() => handleFetchClick()} className='TEST-BTN'>Get Data to Console</button> */}
-
-            {/* <table className='chart__table'>
-                <thead>
-                    <tr>
-                        <th className='table__header'>Сотрудник</th>
-                        <th>Доля навыков с удовлетворительной оценкой</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                <tr>
-                    <td>Ефремов Вячеслав</td>
-                    <td>79%</td>
-                </tr>
-                {isAllSkills.length === 0 ? (
-                        <tr>
-                            <td colSpan="2">Загрузить...</td>
-                        </tr>
-                    ) : (
-                        isAllSkills.map((staff, i) => (
-                            <tr key={i}>
-                                <td>{staff.id}</td>
-                                <td>{staff.title}</td>
-                            </tr>
-                        ))
-                    )}
-                </tbody>
-            </table> */}
+            {isFetchingData ? (
+                <p>Loading...</p>
+            ) : (
+                <ChartLeftBars data={isAllSkills}/>
+            )}
 
             {/* TEST FETCH BTN */}
-            <button onClick={() => handleFetchClick()} className='TEST-BTN'>Get Data to Console</button>
-
-            <ul>
-                {isAllSkills.length === 0 ? (
-                    <li>
-                        <p>Загрузить...</p>
-                    </li>
-                ) : (
-                    console.log(isAllSkills)
-                )}
-            </ul>
-
+            {/*<button onClick={() => handleFetchClick()} className='TEST-BTN'>Get Data to Console</button>*/}
+            <button onClick={fetchSkills} className='TEST-BTN'>Обновить данные</button>
         </div>
     )
 }

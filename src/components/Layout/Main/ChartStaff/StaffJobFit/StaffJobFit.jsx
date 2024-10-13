@@ -7,6 +7,9 @@ function StaffJobFit() {
     const [isFetchingData, setFetchingData] = useState('false')
     const [isAllStaff, setAllStaff] = useState([])
 
+    useEffect(() => {
+        fetchAllStaff()
+    }, [])
     const fetchAllStaff = async () => {
         setFetchingData(true)
         // const db_url = 'https://jsonplaceholder.typicode.com';

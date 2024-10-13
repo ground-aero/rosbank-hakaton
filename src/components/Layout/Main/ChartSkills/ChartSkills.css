@@ -1,5 +1,7 @@
 .chartSkills {
     position: relative;
+    display: flex;
+    flex-direction: column;
     width: 555px;
     height: 411px;
     padding: 20px 40px 20px 40px;

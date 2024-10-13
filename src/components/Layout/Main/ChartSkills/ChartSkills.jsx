@@ -23,7 +23,9 @@ function ChartSkills() {
             </div>
 
             <div className="tab-content-chart">
-                {activeTab === 'skillsLevel' ? <SkillsLevel/> : <SkillsPoints/>}
+                <div className="scrollable-content">
+                    {activeTab === 'skillsLevel' ? <SkillsLevel/> : <SkillsPoints/>}
+                </div>
             </div>
 
 
