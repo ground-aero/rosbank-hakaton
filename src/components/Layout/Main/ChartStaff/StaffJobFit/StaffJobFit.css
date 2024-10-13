@@ -40,6 +40,10 @@
 .table__row {
     border: 1px solid var(--text-color-middle);
 }
+.table__row.selected {
+    border: 2px solid var(--text-color-middle);
+    background-color: var(--background-primary);
+}
 
 .TEST-BTN {
     padding: 10px;

@@ -1,8 +1,8 @@
-import { Outlet } from 'react-router-dom';
+import React from 'react'
 import Sidebar from "./Sidebar/Sidebar"
 import Main from "./Main/Main"
-import TopBar from "./TopBar/TopBar";
-import SearchForm from "./SearchForm/SearchForm";
+import TopBar from "./TopBar/TopBar"
+import SearchForm from "./SearchForm/SearchForm"
 import './Layout.css'
 
 function Layout() {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Bar } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
@@ -20,6 +20,18 @@ ChartJS.register(
 );
 
 const ChartLeftBars = ({ data }) => {
+    const chartRef = useRef(null);
+
+    useEffect(() => {
+        const chart = chartRef.current;
+
+        if (chart) {
+            chart.data.labels = data.map(item => item.skill_name);
+            chart.data.datasets[0].data = data.map(item => item.average_rating || item.skill_level);
+            chart.update();
+        }
+    }, [data]);
+
     if (!data || data.length === 0) {
         return <div>No data available</div>;
     }
@@ -79,8 +91,6 @@ const ChartLeftBars = ({ data }) => {
         datasets: [
             {
                 data: data.map(item => item.average_rating),
-                // backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                // borderColor: 'rgb(75, 192, 192)',
                 backgroundColor: 'rgba(255, 218, 124, 0.6)',
                 borderColor: 'rgb(255, 218, 124)',
                 borderWidth: 1,
@@ -99,16 +109,19 @@ const ChartLeftBars = ({ data }) => {
                 const meta = chart.getDatasetMeta(i);
                 if (!meta.hidden) {
                     meta.data.forEach((bar, index) => {
-                        const data = dataset.data[index].toFixed(2);
-                        const xValue = xAxis.getPixelForValue(data);
-                        const yValue = yAxis.getPixelForValue(chart.data.labels[index]);
+                        const data = dataset.data[index];
+                        if (data !== undefined && data !== null) {
+                            const formattedData = Number(data).toFixed(2);
+                            const xValue = xAxis.getPixelForValue(data);
+                            const yValue = yAxis.getPixelForValue(chart.data.labels[index]);
 
-                        ctx.fillStyle = 'black';
-                        ctx.textAlign = 'center';
-                        ctx.textBaseline = 'middle';
-                        ctx.font = '10px Arial';
-                        ctx.fontWeight = '100';
-                        ctx.fillText(data, xValue / 2, yValue);
+                            ctx.fillStyle = 'black';
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'middle';
+                            ctx.font = '10px Arial';
+                            ctx.fontWeight = '100';
+                            ctx.fillText(formattedData, xValue - 20, yValue);
+                        }
                     });
                 }
             });
@@ -117,7 +130,7 @@ const ChartLeftBars = ({ data }) => {
 
     return (
         <div style={{ height: `${data.length * 40}px`, width: '100%' }}>
-            <Bar options={options} data={chartData} plugins={plugins} />
+            <Bar ref={chartRef} options={options} data={chartData} plugins={plugins} />
         </div>
     );
 };

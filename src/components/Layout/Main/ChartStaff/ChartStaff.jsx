@@ -28,7 +28,6 @@ function ChartStaff() {
                 </div>
             </div>
 
-
         </section>
     );
 }

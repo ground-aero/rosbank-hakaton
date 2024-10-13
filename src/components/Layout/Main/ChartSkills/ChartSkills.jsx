@@ -28,7 +28,6 @@ function ChartSkills() {
                 </div>
             </div>
 
-
         </section>
     );
 }

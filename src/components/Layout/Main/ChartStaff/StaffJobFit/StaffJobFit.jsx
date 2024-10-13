@@ -1,19 +1,20 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useContext} from 'react'
 import axios from 'axios'
 import './StaffJobFit.css'
-import BarChart from "../../../../Charts/BarChart";
+import {TeamContext} from "../../../../../context/context";
 
 function StaffJobFit() {
     const [isFetchingData, setFetchingData] = useState('false')
     const [isAllStaff, setAllStaff] = useState([])
+    const {isEmployeeId, setEmployeeId, isTeamId} = useContext(TeamContext)
 
     useEffect(() => {
         fetchAllStaff()
-    }, [])
+    }, [isTeamId])
     const fetchAllStaff = async () => {
         setFetchingData(true)
         // const db_url = 'https://jsonplaceholder.typicode.com';
-        const db_url = 'http://127.0.0.1:8000/api/v1/dashboard/suitability_position/?team=5';
+        const db_url = `http://127.0.0.1:8000/api/v1/dashboard/suitability_position/?team=${isTeamId}`;
         try {
             let { data } = await axios.get(`${db_url}`, {
                 headers: {
@@ -31,13 +32,14 @@ function StaffJobFit() {
         }
     }
 
-    const handleFetchClick = () => {
-        fetchAllStaff()
+    const handleRowClick = (clickedEmployeeId) => {
+        setEmployeeId(clickedEmployeeId === isEmployeeId ? null : clickedEmployeeId);
+        // console.log(clickedEmployeeId)
     }
 
     return (
         <>
-            <p className='table__subtitle'>Сотрудник: ${}_ • Уровень владения навыками</p>
+            <p className='table__subtitle'>Сотрудник: {isEmployeeId || '_'}_ • Уровень владения навыками</p>
 
             <table className='table'>
                 <thead className='table__headers'>
@@ -48,19 +50,18 @@ function StaffJobFit() {
                 </thead>
 
                 <tbody>
-                {/*<tr className='table__row'>*/}
-                {/*    <td className='table__col_left'>Ефремов Вячеслав</td>*/}
-                {/*    <td className='table__col_right'>79%</td>*/}
-                {/*</tr>*/}
 
                 {isAllStaff.length === 0 ? (
                     <tr className='table__row'>
-                        <td colSpan="2" className='table__col_left'>Выберите в меню Команду</td>
-                        {/*<td className='table__col_right'></td>*/}
+                        <td colSpan="2" className='table__col_left'>В меню выберите Команду</td>
                     </tr>
                 ) : (
                     isAllStaff.map((employee, i) => (
-                            <tr key={i} className='table__row'>
+                            <tr key={i}
+                                onClick={() => handleRowClick(employee.employee_id)}
+                                className={`table__row ${isEmployeeId === employee.employee_id ? 'selected' : ''}`}
+                                style={{cursor: 'pointer'}}
+                            >
                                 <td className='table__col_left'>{employee.employee}</td>
                                 <td className='table__col_right'>{`${employee.percentage}%`}</td>
                             </tr>
@@ -69,23 +70,7 @@ function StaffJobFit() {
                 </tbody>
             </table>
 
-
-
-            {/*<BarChart/>*/}
-
-            {/* TEST FETCH BTN */}
-            <button onClick={() => handleFetchClick()} className='TEST-BTN'>Get Data to Console</button>
-
-            <ul>
-                {isAllStaff.length === 0 ? (
-                <li>
-                    <p>Выберите команду в меню</p>
-                </li>
-                ) : (
-                    console.log(isAllStaff)
-                )}
-            </ul>
-
+            {/*{isTeamId && <SkillsLevel employeeId={isSelectedEmployeeId} isTeamId={isTeamId} />}*/}
         </>
     )
 }
