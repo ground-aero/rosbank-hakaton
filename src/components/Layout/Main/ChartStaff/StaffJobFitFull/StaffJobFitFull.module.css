@@ -1,0 +1,18 @@
+.chartSubtitle {
+    font-size: 10px;
+}
+
+.chartTable {
+    padding-top: 24px;
+}
+
+.tableHeader {
+    width: 213px;
+    text-align: left;
+}
+
+.testBtn {
+    padding: 10px;
+    background-color: #FFCE1B;
+    cursor: pointer;
+}

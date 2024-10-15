@@ -1,19 +1,29 @@
-import './StaffSkilledNum.css'
-import {useState} from "react";
+import styles from './StaffSkilledNum.module.css';
+import { useState } from 'react';
+
 function StaffSkilledNum() {
-    const [isActiveBtn, setActiveBtn] = useState('hardSkill')
+    const [isActiveBtn, setActiveBtn] = useState('hardSkill');
 
     return (
         <div>
-            <span className='chart-btns-wrap'>
-                <button onClick={() => setActiveBtn('hardSkill')} className={`chart-btn chart-btn-hSkill ${isActiveBtn === 'hardSkill' ? 'active' : ''}`}>Hard Skill</button>
-                <button onClick={() => setActiveBtn('softSkill')} className={`chart-btn ${isActiveBtn === 'softSkill' ? 'active' : ''}`}>Soft Skill</button>
+            <span className={styles.chartBtnsWrap}>
+                <button
+                    onClick={() => setActiveBtn('hardSkill')}
+                    className={`${styles.chartBtn} ${styles.chartBtnHSkill} ${isActiveBtn === 'hardSkill' ? styles.chartBtnActive : ''}`}
+                >
+                    Hard Skill
+                </button>
+                <button
+                    onClick={() => setActiveBtn('softSkill')}
+                    className={`${styles.chartBtn} ${isActiveBtn === 'softSkill' ? styles.chartBtnActive : ''}`}
+                >
+                    Soft Skill
+                </button>
             </span>
 
-            <p className='chart-subtitle'>Сотрудник •</p>
-
+            <p className={styles.chartSubtitle}>Сотрудник •</p>
         </div>
-    )
+    );
 }
 
-export default StaffSkilledNum
+export default StaffSkilledNum;

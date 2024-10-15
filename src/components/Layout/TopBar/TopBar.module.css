@@ -1,0 +1,68 @@
+.topBar {
+    padding: 38px 40px 38px 62px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.btns {
+    display: flex;
+    align-items: center;
+    margin-right: 63px;
+}
+
+.btn {
+    width: 114px;
+    height: 48px;
+    background-color: transparent;
+    font-size: 10px;
+    font-weight: 600;
+    color: inherit;
+    border: 1px solid var(--btn-border-light);
+    border-radius: 12px;
+    margin-right: 12px;
+}
+
+.btnTeam {
+    /*cursor: pointer;*/
+}
+
+.chartsFilter {
+    width: 32px;
+    height: 32px;
+}
+
+.wrapData {
+    display: flex;
+    width: min-content;
+}
+
+.innerData {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 215px;
+    height: 72px;
+    background-color: var(--background-secondary);
+    border-radius: 12px;
+    margin-right: 9px;
+}
+
+.innerData:nth-child(n+2) {
+    margin-right: 0;
+}
+
+.inner {
+    height: 24px;
+    margin-left: 22px;
+}
+
+.innerNum {
+    font-weight: 600;
+    height: 22px;
+}
+
+.innerText {
+    font-size: 10px;
+    height: 16px;
+}

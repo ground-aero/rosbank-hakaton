@@ -1,6 +1,6 @@
 import {useState, useEffect, useContext} from 'react'
 import axios from 'axios'
-import './SkillsLevel.css'
+import styles from './SkillsLevel.module.css'
 import ChartLeftBars from '../../../../Charts/ChartLeftBars'
 import { TeamContext } from '../../../../../context/context'
 
@@ -44,7 +44,7 @@ function SkillsLevel() {
 
     return (
         <div>
-            <p className='chart__subtitle'>
+            <p className={styles.chartSubtitle}>
                 {isEmployeeId ? 'ШКАЛЫ УРОВНЕЙ НАВЫКОВ СОТРУДНИКА' : 'СРЕДНИЕ УРОВНИ НАВЫКОВ КОМАНДЫ'}
             </p>
 
@@ -53,9 +53,6 @@ function SkillsLevel() {
             ) : (
                 <ChartLeftBars key={isEmployeeId || 'team'} data={isAllSkills}/>
             )}
-
-            {/* TEST FETCH BTN */}
-            {/*<button onClick={fetchSkills} className='TEST-BTN'>Обновить данные</button>*/}
         </div>
     )
 }

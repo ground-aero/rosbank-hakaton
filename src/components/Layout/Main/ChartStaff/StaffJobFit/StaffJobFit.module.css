@@ -1,0 +1,55 @@
+.table {
+    padding-top: 24px;
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--text-color-middle);
+}
+
+.tableSubtitle {
+    font-size: 10px;
+}
+
+.tableHeaders {
+    background-color: var(--background-secondary);
+}
+
+.tableHeader {
+    font-weight: 600;
+}
+
+.tableHeaderLeft {
+    width: 213px;
+    border-right: 1px solid var(--text-color-middle);
+}
+
+.tableHeaderRight {
+    min-width: 395px;
+}
+
+.tableColLeft {
+    width: 213px;
+    border-right: 1px solid var(--text-color-middle);
+    border-bottom: 1px solid var(--text-color-middle);
+}
+
+.tableHeader,
+.tableColLeft,
+.tableColRight {
+    padding: 6px 0 10px 12px;
+    text-align: left;
+}
+
+.tableRow {
+    border: 1px solid var(--text-color-middle);
+}
+
+.tableRowSelected {
+    border: 2px solid var(--text-color-middle);
+    background-color: var(--background-primary);
+}
+
+.testBtn {
+    padding: 10px;
+    background-color: #FFCE1B;
+    cursor: pointer;
+}

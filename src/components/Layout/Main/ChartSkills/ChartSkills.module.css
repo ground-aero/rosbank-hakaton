@@ -1,0 +1,58 @@
+.chartSkills {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 555px;
+    height: 411px;
+    padding: 20px 40px 20px 40px;
+    margin-top: 43px;
+    border-radius: 12px;
+    background-color: #FFF;
+    border: 1px solid var(--text-color-light);
+}
+
+.tabsChart {
+    display: flex;
+    height: 20px;
+    width: 100%;
+}
+
+.tabChart {
+    color: var(--text-color-middle);
+    padding-right: 16px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.tabChart.active {
+    color: var(--text-color-dark);
+}
+
+.tabContentChart {
+    flex-grow: 1;
+    padding-top: 4px;
+    height: 100%;
+    overflow: hidden;
+}
+
+.scrollableContent {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.scrollableContent::-webkit-scrollbar {
+    width: 7px;
+}
+
+.scrollableContent::-webkit-scrollbar-track {
+    background: var(--background-secondary);
+}
+
+.scrollableContent::-webkit-scrollbar-thumb {
+    background: var(--background-tertiary);
+    border-radius: 4px;
+}
+
+.scrollableContent::-webkit-scrollbar-thumb:hover {
+    background: var(--background-quaternary-hover);
+}

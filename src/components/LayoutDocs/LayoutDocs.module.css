@@ -1,0 +1,19 @@
+.docs {
+    display: flex;
+}
+
+.docsColumn {
+    min-width: 572px;
+    flex: 1;
+    padding-right: 97px;
+}
+
+.docsColumn .docsHeader:nth-child(n+2) {
+    padding-top: 32px;
+}
+
+.columnText {
+    padding: 16px 0 0;
+    font-size: 12px;
+    color: var(--text-color-dark);
+}

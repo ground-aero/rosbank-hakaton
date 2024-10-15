@@ -1,0 +1,32 @@
+.chartBtnsWrap {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 178px;
+    height: 36px;
+    display: flex;
+    margin: 20px 40px 0 0;
+}
+
+.chartBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    color: var(--text-color-light);
+    line-height: 36px;
+    width: 50%;
+    height: 100%;
+    background-color: var(--text-color-middle);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.chartBtnActive {
+    background-color: var(--color-red);
+}
+
+.chartBtnHSkill {
+    margin-right: 4px;
+}
