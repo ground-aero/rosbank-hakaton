@@ -1,7 +1,7 @@
 .topbar {
     padding: 38px 40px 38px 62px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: flex-start;
 }
 

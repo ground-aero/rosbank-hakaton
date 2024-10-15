@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
+// import './SkillsPoints.css'
 
 function SkillsPoints() {
     const [isFetchingData, setFetchingData] = useState('false')
@@ -33,6 +34,51 @@ function SkillsPoints() {
     return (
         <div>
             <p className='chart__subtitle'>ТАБЛИЦА С ФИО И БАЛЛАМИ</p>
+
+            {/*TEST FETCH BTN*/}
+            {/* <button onClick={() => handleFetchClick()} className='TEST-BTN'>Get Data to Console</button> */}
+
+            {/* <table className='chart__table'>
+                <thead>
+                    <tr>
+                        <th className='table__header'>Сотрудник</th>
+                        <th>Доля навыков с удовлетворительной оценкой</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td>Ефремов Вячеслав</td>
+                    <td>79%</td>
+                </tr>
+                {isAllSkills.length === 0 ? (
+                        <tr>
+                            <td colSpan="2">Загрузить...</td>
+                        </tr>
+                    ) : (
+                        isAllSkills.map((staff, i) => (
+                            <tr key={i}>
+                                <td>{staff.id}</td>
+                                <td>{staff.title}</td>
+                            </tr>
+                        ))
+                    )}
+                </tbody>
+            </table> */}
+
+            {/* TEST FETCH BTN */}
+            <button onClick={() => handleFetchClick()} className='TEST-BTN'>Get Data to Console</button>
+
+            <ul>
+                {isAllSkills.length === 0 ? (
+                    <li>
+                        <p>Загрузить...</p>
+                    </li>
+                ) : (
+                    console.log(isAllSkills)
+                )}
+            </ul>
+
         </div>
     )
 }

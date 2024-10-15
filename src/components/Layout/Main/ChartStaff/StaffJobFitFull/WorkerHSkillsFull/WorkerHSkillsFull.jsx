@@ -1,6 +1,6 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import axios from 'axios'
-import './StaffJobFitFull.module.css'
+import './StaffJobFitFull.css'
 import ChartRightBars from "../../../../../Charts/ChartRightBars";
 
 function WorkerSkillsFull() {

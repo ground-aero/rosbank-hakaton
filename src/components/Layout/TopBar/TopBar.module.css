@@ -48,6 +48,10 @@
     margin-right: 9px;
 }
 
+.innerDataBusFactor {
+
+}
+
 .innerData:nth-child(n+2) {
     margin-right: 0;
 }
