@@ -1,32 +1,32 @@
-import {NavLink} from 'react-router-dom'
-import './Sidebar.css'
-import BtnEmpty from '../../../images/btn_empty.png'
-import Men from '../../../images/btn_users.png'
-import UserImg from '../../../images/user_img.png'
-import {useState} from "react";
+import { NavLink } from 'react-router-dom';
+import styles from './Sidebar.module.css';
+import BtnEmpty from '../../../images/btn_empty.png';
+import Men from '../../../images/btn_users.png';
+import UserImg from '../../../images/user_img.png';
+import { useState } from "react";
 
 function Sidebar() {
-    const [activeBtn, setActiveBtn] = useState('men')
+    const [activeBtn, setActiveBtn] = useState('men');
 
     return (
-        <nav id='sidebar' className='sidebar'>
+        <nav id='sidebar' className={styles.sidebar}>
 
-            <aside className="sidebar__inner-bar">
-                <ul className="inner__half">
-                    <li className="btn__wrap">
-                        <img src={BtnEmpty} className="inner__icon-bg" alt="btn empty"/>
+            <aside className={styles.sidebarInnerBar}>
+                <ul className={styles.innerHalf}>
+                    <li className={styles.btnWrap}>
+                        <img src={BtnEmpty} className={styles.innerIconBg} alt="btn empty" />
                     </li>
-                    <li className="btn__wrap">
-                        <img src={BtnEmpty} className="inner__icon-bg" alt={"btn empty"}/>
+                    <li className={styles.btnWrap}>
+                        <img src={BtnEmpty} className={styles.innerIconBg} alt="btn empty" />
                     </li>
-                    <li className={`btn__wrap ${activeBtn==='men' ? 'active' : ''}`} >
+                    <li className={`${styles.btnWrap} ${activeBtn === 'men' ? styles.active : ''}`}>
                         <NavLink to="/" end onClick={() => setActiveBtn('men')}>
-                            <img src={Men} className="inner__icon-bg" alt={"men"}/>
+                            <img src={Men} className={styles.innerIconBg} alt="men" />
                         </NavLink>
                     </li>
                 </ul>
-                <ul className="inner__half">
-                    <img src={UserImg} className="inner__icon-bg inner__user-img" alt={"user"}/>
+                <ul className={styles.innerHalf}>
+                    <img src={UserImg} className={`${styles.innerIconBg} ${styles.innerUserImg}`} alt="user" />
                 </ul>
             </aside>
 
