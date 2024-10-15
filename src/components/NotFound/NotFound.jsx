@@ -1,19 +1,19 @@
 // component - NotFound page - 404
-import '../../globals.css';
-import './NotFound.css';
-import {Link, useNavigate} from 'react-router-dom';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import styles from './NotFound.module.css';
 
 function NotFound() {
     const navigate = useNavigate();
 
     return (
-        <main className='main'>
-            <section className='not-found not-found_page'>
-                <div className='not-found_info__wrap'>
-                    <h1 className='not-found_page__err'>404</h1>
-                    <p className='not-found_page__text'>Такая страница не найдена</p>
+        <main>
+            <section className={`${styles.notFound} ${styles.notFoundPage}`}>
+                <div className={styles.notFoundInfoWrap}>
+                    <h1 className={styles.notFoundPageErr}>404</h1>
+                    <p className={styles.notFoundPageText}>Такая страница не найдена</p>
                 </div>
-                <Link onClick={() => navigate(-1)} className='link-back'>Назад</Link>
+                <Link onClick={() => navigate(-1)} className={styles.linkBack}>Назад</Link>
             </section>
         </main>
     );
