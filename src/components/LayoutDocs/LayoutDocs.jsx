@@ -1,26 +1,26 @@
-import './LayoutDocs.css';
-import '../../globals.css'
+import styles from './LayoutDocs.module.css';
 
 function LayoutDocs() {
-
     return (
-        <section id='docs' className='docs'>
-            <div className="docs__column">
-                <h1 className="docs__header">Описание дашборда</h1>
-                <p className="column__text">Текст документации в первом столбце</p>
+        <section id='docs' className={styles.docs}>
+            <div className={styles.docsColumn}>
+                <h1 className={styles.docsHeader}>Описание дашборда</h1>
+                <p className={styles.columnText}>Текст документации в первом столбце</p>
 
-                <h1 className="docs__header">Метрики</h1>
-                <p className="column__text">Количество уникальных сотрудников SELECT COUNT(DISTINCT ID) FROM df;
-                    Средний балл SELECT AVG(оценка_) FROM df;
-                    Количество уникальных навыков SELECT COUNT(DISTINCT навык) FROM df;</p>
+                <h1 className={styles.docsHeader}>Метрики</h1>
+                <p className={styles.columnText}>
+                    Количество уникальных сотрудников SELECT COUNT(DISTINCT ID) FROM df; <br/>
+                    Средний балл SELECT AVG(оценка_) FROM df; <br/>
+                    Количество уникальных навыков SELECT COUNT(DISTINCT навык) FROM df;
+                </p>
             </div>
             {/* column - 2 */}
-            <div className="docs__column">
-                <h1 className="docs__header">Описание датасета</h1>
-                <p className="column__text">
+            <div className={styles.docsColumn}>
+                <h1 className={styles.docsHeader}>Описание датасета</h1>
+                <p className={styles.columnText}>
                     1. ID: Уникальный идентификационный номер сотрудника.<br/>
                     2. Сотрудник: Полное имя сотрудника, представленное в формате ФИО (Фамилия, Имя, Отчество).<br/>
-                    3. Должность: Должность, занимаемая сотрудником в организации.
+                    3. Должность: Должность, занимаемая сотрудником в организации.<br/>
                     4. Команда: Название команды, в которой работает сотрудник.<br/>
                     5. Грейд: Уровень профессионального развития сотрудника, который может принимать одно из следующих
                     значений: Junior, Middle, Senior.<br/>
@@ -31,16 +31,16 @@ function LayoutDocs() {
                     "софт-скиллы".<br/>
                     10. Дата: Дата проведения экзаменации или оценки навыков сотрудника.<br/>
                     11. Оценка_: Числовая оценка, представляющая уровень владения навыком по пятибалльной системе:<br/>
-                    &#8226; 1 — не владеет,
-                    &#8226; 2 — начинающий,
-                    &#8226; 3 — базовый,
-                    &#8226; 4 — уверенный,
-                    &#8226; 5 — экспертный.
-                    1. Оценка: Строковое представление числовой оценки навыка из столбца "Оценка_".<br/>
-                    2. Соответствие: Показатель, отражающий, соответствует ли уровень владения навыком установленному
-                    уровню для данного сотрудника</p>
+                    &#8226; 1 — не владеет,<br/>
+                    &#8226; 2 — начинающий,<br/>
+                    &#8226; 3 — базовый,<br/>
+                    &#8226; 4 — уверенный,<br/>
+                    &#8226; 5 — экспертный.<br/>
+                    12. Оценка: Строковое представление числовой оценки навыка из столбца "Оценка_".<br/>
+                    13. Соответствие: Показатель, отражающий, соответствует ли уровень владения навыком установленному
+                    уровню для данного сотрудника
+                </p>
             </div>
-
         </section>
     );
 }
