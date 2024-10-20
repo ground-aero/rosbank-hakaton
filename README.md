@@ -34,14 +34,22 @@
 
 Эндпоинты:
 
-- Bus-factor:  
-  /api/v1/dashboard/bus_factor
-  /api/v1/dashboard/bus_factor/?team=5 -
+Bus-factor:  
+- /api/v1/dashboard/bus_factor - показатель Bus-factor
+- /api/v1/dashboard/bus_factor/?team=5 -
   всплывающий тултип с названием бас-фактора, привязанного к конкретной команде
-
 
 - Массив объектов с названиями команд:  
   /api/v1/teams/
+
+(Чарт-1 сверху)
+- /api/v1/dashboard/suitability_position/ - список всех сотрудников команд с показателями соответствия должностей сотрудников по списку
+- /api/v1/dashboard/suitability_position/?team=5 - показатели соответствия должностей команды "Core" (по умолчанию)  
+
+(Чарт-2 снизу слева):
+- /api/v1/dashboard/skill_level/ - уровни владения навыков команд (усредненная)
+- /api/v1/dashboard/skill_level/?team=5 - уровни владения навыков команды "Core" (усредненная)
+- /api/v1/dashboard/suitability_position/30/skills/ - показатели Уровней владения навыками конкретного сотрудника (наименование навыка, балл)
 
 ---
 #### Для локальной разработки нужно:
