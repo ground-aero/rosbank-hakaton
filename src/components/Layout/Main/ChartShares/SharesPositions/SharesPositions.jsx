@@ -1,52 +1,54 @@
 import { useState, useEffect, useContext, useCallback } from 'react'
 import axios from 'axios'
-import ChartLeftBars from '../../../../Charts/ChartLeftBars'
 import { TeamContext } from '../../../../../context/context'
 import { DB_URL } from "../../../../../utils/constants";
+import ChartDoughnut from '../../../../Charts/ChartDoughnut'
 
-function SkillsLevel() {
-    const { isEmployeeId, isTeamId } = useContext(TeamContext);
+function SharesPositions() {
+    const { isTeamId } = useContext(TeamContext);
     const [isFetchingData, setFetchingData] = useState(false)
-    const [isAllSkills, setAllSkills] = useState([])
+    const [isAllPositions, setAllPositions] = useState([])
 
-    const fetchSkills = useCallback(async () => {
+    const fetchEmployeePositions = useCallback(async () => {
         if (!isTeamId) return;
 
         setFetchingData(true)
-        let url = isEmployeeId
-            ? `${DB_URL}/api/v1/dashboard/suitability_position/${isEmployeeId}/skills`
-            : `${DB_URL}/api/v1/dashboard/skill_level/?team=${isTeamId}`;
+        let url = isTeamId
+            ? `${DB_URL}/api/v1/dashboard/employee_positions/?team=${isTeamId}`
+            : `${DB_URL}/api/v1/dashboard/employee_positions/`;
 
+     console.log('isTeamId, url', isTeamId, url)
         try {
             let { data } = await axios.get(`${url}`, {
                 headers: {
                     'Accept': 'application/json',
                 },
             });
-            setAllSkills(data)
+            setAllPositions(data)
+     console.log('setAllPositions data:', data)
             return data;
         } catch (err) {
             console.error(err)
         } finally {
             setFetchingData(false)
         }
-    }, [isEmployeeId, isTeamId]);
+    }, [isTeamId, isTeamId]);
 
     useEffect(() => {
         if (isTeamId) {
-            fetchSkills();
+            fetchEmployeePositions();
         }
-    }, [isTeamId, fetchSkills]);
+    }, [isTeamId, fetchEmployeePositions]);
 
     return (
         <div>
             {isFetchingData ? (
                 <p>Loading...</p>
             ) : (
-                <ChartLeftBars key={isEmployeeId || 'team'} data={isAllSkills}/>
+                <ChartDoughnut key={isTeamId || 'team id ?'} data={isAllPositions}/>
             )}
         </div>
     )
 }
 
-export default SkillsLevel
+export default SharesPositions

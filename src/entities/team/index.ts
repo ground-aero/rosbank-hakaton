@@ -1,0 +1,1 @@
+export { type TTeam, type TTeamName } from './types'

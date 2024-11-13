@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import styles from './SearchForm.module.css'; // Импортируем стили как модуль
+import globalStyles from '../../../globals.module.css'
+import styles from './SearchForm.module.css';
 import { useLocalStorageState as useStorage } from '../../../hooks/useLocalStorageState';
 
 function SearchForm() {
@@ -10,8 +11,8 @@ function SearchForm() {
     const [isSearchWord, setSearchWord] = useStorage('searchWord', ''); // key = 'searchWord', '' = initial value
 
     function handleInput(evt) {
-        if (location.pathname === '/') {
-            localStorage.setItem('searchWord', JSON.stringify(evt.target.value)); // сохраняем искомое слово в ЛС
+        if (evt && evt.target && location.pathname === '/') {
+            localStorage.setItem('searchWord', JSON.stringify(evt.target.value));
             setSearchWord(evt.target.value);
         }
     }
@@ -19,7 +20,8 @@ function SearchForm() {
     function handleSubmitSearch(evt) {
         evt.preventDefault();
         if (location.pathname === '/') {
-            const searchWord = JSON.parse(localStorage.getItem('searchWord')); // достаем 'searchWord' из ЛС
+            const searchWord = JSON.parse(localStorage.getItem('searchWord'));
+            console.log(searchWord)
             // можно добавить логику для поиска
         } else {
             setPlaceholder('Введите запрос');
@@ -27,12 +29,12 @@ function SearchForm() {
     }
 
     return (
-        <form onSubmit={handleSubmitSearch} className={`${styles.searchForm}`} id="search" name="search">
+        <form onSubmit={handleSubmitSearch} className={`${styles.searchForm} ${globalStyles.section}`} id="search" name="search">
             <div className={styles.searchWrap}>
                 <button type="submit" className={`${styles.searchLoupeBtn} ${styles.searchLoupeImg}`}></button>
                 <input
                     type="text"
-                    value={isSearchWord ? isSearchWord : ''}
+                    value={isSearchWord || ''}
                     className={styles.searchInput}
                     id="search-input"
                     name="search"
