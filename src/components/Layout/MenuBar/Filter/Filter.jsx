@@ -1,11 +1,25 @@
-import FilterIcon from "../../../../images/filter.png";
 import styles from './Filter.module.css'
+import PopupMainMenu from "../../../../components/Popup/PopupMainMenu/PopupMainMenu"
+import {useState} from "react"
 
 function Filter() {
+    const [isPopupOpen, setPopupOpen] = useState(false)
+    const [isMainMenuPopupOpen, setMainMenuPopupOpen] = useState(false)
+
+    function openPopup() {
+        setPopupOpen(true);
+        setMainMenuPopupOpen(true);
+    }
+
+    function closeAllPopups() {
+        setPopupOpen(false);
+        setMainMenuPopupOpen(false);
+    }
 
     return (
         <div className={styles.filterWrap}>
-            <img src={FilterIcon} className={styles.chartsFilter} alt={'filter'}/>
+            <button className={styles.btnFilter} type="button" onClick={ openPopup } />
+            <PopupMainMenu name='mainMenu' onOpen={isMainMenuPopupOpen} onClose={closeAllPopups}/>
         </div>
     );
 }

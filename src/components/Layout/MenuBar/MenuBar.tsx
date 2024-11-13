@@ -1,10 +1,11 @@
-import { useContext, useEffect, useState, useCallback } from "react";
+import { useContext, useEffect, useState, useCallback } from "react"
 import api from '../../../api/api'
 import globalStyles from '../../../globals.module.css'
-import styles from './MenuBar.module.css';
-import { TeamContext } from "../../../context/context";
-import Filter from './Filter/Filter';
+import styles from './MenuBar.module.css'
+import { TeamContext } from "../../../context/context"
+import Filter from './Filter/Filter'
 import { type TBusFactor } from '../../../entities/bus-factor/types'
+import PopupMainMenu from '../../Popup/PopupMainMenu/PopupMainMenu'
 
 function MenuBar() {
     const { isTeamTotal, isTeamId, isBusFactor, setBusFactor } = useContext(TeamContext);
@@ -41,6 +42,7 @@ console.log(data)
             </section>
 
             <Filter />
+            {/*<PopupMainMenu onOpen={onOpen} />*/}
         </section>
     );
 }
