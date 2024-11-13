@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
@@ -20,18 +20,6 @@ ChartJS.register(
 );
 
 const ChartLeftBars = ({ data }) => {
-    const chartRef = useRef(null);
-
-    useEffect(() => {
-        const chart = chartRef.current;
-
-        if (chart) {
-            chart.data.labels = data.map(item => item.skill_name);
-            chart.data.datasets[0].data = data.map(item => item.average_rating || item.skill_level);
-            chart.update();
-        }
-    }, [data]);
-
     if (!data || data.length === 0) {
         return <div>No data available</div>;
     }
@@ -65,9 +53,6 @@ const ChartLeftBars = ({ data }) => {
             y: {
                 position: 'right',
                 ticks: {
-                    callback: function(value, index) {
-                        return this.getLabelForValue(value);
-                    },
                     font: {
                         size: 11,
                     },
@@ -90,7 +75,7 @@ const ChartLeftBars = ({ data }) => {
         labels: data.map(item => item.skill_name),
         datasets: [
             {
-                data: data.map(item => item.average_rating),
+                data: data.map(item => item.average_rating || item.skill_level),
                 backgroundColor: 'rgba(255, 218, 124, 0.6)',
                 borderColor: 'rgb(255, 218, 124)',
                 borderWidth: 1,
@@ -119,7 +104,6 @@ const ChartLeftBars = ({ data }) => {
                             ctx.textAlign = 'center';
                             ctx.textBaseline = 'middle';
                             ctx.font = '10px Arial';
-                            ctx.fontWeight = '100';
                             ctx.fillText(formattedData, xValue - 20, yValue);
                         }
                     });
@@ -130,7 +114,7 @@ const ChartLeftBars = ({ data }) => {
 
     return (
         <div style={{ height: `${data.length * 40}px`, width: '100%' }}>
-            <Bar ref={chartRef} options={options} data={chartData} plugins={plugins} />
+            <Bar options={options} data={chartData} plugins={plugins} />
         </div>
     );
 };

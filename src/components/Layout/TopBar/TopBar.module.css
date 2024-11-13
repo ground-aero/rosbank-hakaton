@@ -1,72 +1,68 @@
 .topBar {
-    padding: 38px 40px 38px 62px;
+    width: 100%;
+    height: 100px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    background-color: var(--background-quaternary);
+    /*position: absolute;*/
+    /*top: 0;*/
+    /*left: 0;*/
+}
+
+.topBarInnerBar {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+    height: 48px;
+}
+
+.innerHalf {
+    height: 100%;
+    display: flex;
     align-items: flex-start;
 }
 
-.btns {
+.innerHalf:nth-child(2) {
+    justify-content: flex-end;
+}
+
+.btnWrap {
+    position: relative;
+    width: 40px;
+    height: 40px;
     display: flex;
+    justify-content: center;
     align-items: center;
-    margin-right: 63px;
-}
-
-.btn {
-    width: 114px;
-    height: 48px;
     background-color: transparent;
-    font-size: 10px;
-    font-weight: 600;
-    color: inherit;
-    border: 1px solid var(--btn-border-light);
+    transition: background-color 0.35s ease;
+    margin-bottom: 8px;
     border-radius: 12px;
-    margin-right: 12px;
+    border: none;
 }
 
-.btnTeam {
-    /*cursor: pointer;*/
+.innerIconBg {
+    width: 24px;
+    height: 24px;
 }
 
-.chartsFilter {
+.innerUserImg {
     width: 32px;
     height: 32px;
+    border-radius: 50%;
 }
 
-.wrapData {
-    display: flex;
-    width: min-content;
+.btnWrap:hover {
+    background-color: var(--background-quaternary-hover);
 }
 
-.innerData {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 215px;
-    height: 72px;
-    background-color: var(--background-secondary);
-    border-radius: 12px;
-    margin-right: 9px;
+.btnWrap.active {
+    background-color: var(--background-quaternary-hover);
 }
 
-.innerDataBusFactor {
-
-}
-
-.innerData:nth-child(n+2) {
-    margin-right: 0;
-}
-
-.inner {
+.btnWrap img {
+    width: 24px;
     height: 24px;
-    margin-left: 22px;
-}
-
-.innerNum {
-    font-weight: 600;
-    height: 22px;
-}
-
-.innerText {
-    font-size: 10px;
-    height: 16px;
 }

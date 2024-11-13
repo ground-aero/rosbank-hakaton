@@ -1,72 +1,71 @@
-import { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import styles from './StaffJobFit.module.css';
-import { TeamContext } from "../../../../../context/context";
-import { DB_URL } from '../../../../../utils/constants'
+import { useState, useEffect, useContext, useCallback } from 'react'
+import api from '../../../../../api/api'
+import globalStyles from '../../../../../globals.module.css'
+import styles from './StaffJobFit.module.css'
+import { TeamContext } from "../../../../../context/context"
 
 function StaffJobFit() {
-    const [isFetchingData, setFetchingData] = useState(false);
     const [isAllStaff, setAllStaff] = useState([]);
-    const { isEmployeeId, setEmployeeId, isTeamId, isTeamTotal, setTeamTotal } = useContext(TeamContext);
+    const { isEmployeeId, setEmployeeId, setSelectedEmployeeName, isTeamId, setTeamTotal, setTeamName, isTeamName } = useContext(TeamContext);
 
-    useEffect(() => {
-        fetchAllStaff();
-    }, [isTeamId]);
-
-    const fetchAllStaff = async () => {
-        setFetchingData(true);
-        const db_url = `${DB_URL.serverUrl}/api/v1/dashboard/suitability_position/?team=${isTeamId}`;
+    const getTeamEmployees = useCallback(async () => {
         try {
-            let { data } = await axios.get(`${db_url}`, {
-                headers: {
-                    'Accept': 'application/json',
-                },
-            });
-            console.log(data, data.length);
+            let data = await api.getTeamEmployees(isTeamId)
+// console.log(data)
             setAllStaff(data);
-            setTeamTotal(data.length);
+            // console.log(data)
+            setTeamTotal(data?.length);
         } catch (err) {
             console.error(err);
-        } finally {
-            setFetchingData(false);
         }
-    };
+    }, [isTeamId, setTeamTotal]);
 
-    const handleRowClick = (clickedEmployeeId) => {
-        setEmployeeId(clickedEmployeeId === isEmployeeId ? null : clickedEmployeeId);
-    };
+    useEffect(() => {
+        getTeamEmployees();
+    }, [getTeamEmployees]);
+
+    const getTeamName = useCallback(async () => {
+        try {
+            let data = await api.getTeamNames(isTeamId)
+            const teamName = data.find((team) => team.id === isTeamId)
+            setTeamName(teamName.name);
+        } catch (err) {
+            console.error(err);
+        }
+    }, [isTeamId]);
+
+    useEffect(() => {
+        getTeamName();
+    }, [getTeamName]);
+
+    const handleRowClick = useCallback((clickedEmployeeId, clickedEmployeeName) => {
+        if (clickedEmployeeId === isEmployeeId) {
+            setEmployeeId(null);
+            setSelectedEmployeeName('');
+        } else {
+            setEmployeeId(clickedEmployeeId);
+            setSelectedEmployeeName(clickedEmployeeName);
+        }
+    }, [isEmployeeId, setEmployeeId]);
 
     return (
         <>
-            <p className={styles.tableSubtitle}>
-                Сотрудник: {isEmployeeId || '_'} • Уровень владения навыками
-            </p>
-
-            <table className={styles.table}>
-                <thead className={styles.tableHeaders}>
-                <tr className={styles.tableRow}>
-                    <th className={`${styles.tableHeader} ${styles.tableHeaderLeft}`}>Сотрудник</th>
-                    <th className={`${styles.tableHeader} ${styles.tableHeaderRight}`}>
-                        Доля навыков с удовлетворительной оценкой
-                    </th>
-                </tr>
-                </thead>
-
+            <table className={globalStyles.table}>
                 <tbody>
-                {isAllStaff.length === 0 ? (
-                    <tr className={styles.tableRow}>
-                        <td colSpan="2" className={styles.tableColLeft}>В меню выберите Команду</td>
+                {isAllStaff?.length === 0 ? (
+                    <tr className={globalStyles.tableRow}>
+                        <td colSpan="2" className={globalStyles.tableColLeft}>В меню выберите Команду</td>
                     </tr>
                 ) : (
                     isAllStaff.map((employee, i) => (
                         <tr
                             key={i}
-                            onClick={() => handleRowClick(employee.employee_id)}
-                            className={`${styles.tableRow} ${isEmployeeId === employee.employee_id ? styles.tableRowSelected : ''}`}
+                            onClick={() => handleRowClick(employee.employee_id, employee.employee)}
+                            className={`${globalStyles.tableRow} ${isEmployeeId === employee.employee_id ? globalStyles.tableRowSelected : ''}`}
                             style={{ cursor: 'pointer' }}
                         >
-                            <td className={styles.tableColLeft}>{employee.employee}</td>
-                            <td className={styles.tableColRight}>{`${employee.percentage}%`}</td>
+                            <td className={globalStyles.tableColLeft}>{employee.employee}</td>
+                            <td className={globalStyles.tableColRight}>{`${employee.percentage}%`}</td>
                         </tr>
                     ))
                 )}
