@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext, useCallback } from 'react'
 import api from '../../../../../api/api'
 import globalStyles from '../../../../../globals.module.css'
-import styles from './StaffJobFit.module.css'
 import { TeamContext } from "../../../../../context/context"
 
 function StaffJobFit() {

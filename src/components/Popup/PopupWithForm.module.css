@@ -1,0 +1,37 @@
+.popup {
+    /*display: none;*/
+    position: absolute;
+    z-index: 2;
+    top: 42px;
+    right: 5px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out, visibility 0s 0.4s;
+}
+
+.popup_opened {
+    display: flex;
+    flex-direction: column;
+    padding: 44px 12px;
+    background-color: #fff;
+    border-radius: 20px;
+    border: 1px solid var(--background-tertiary);
+    visibility: visible;
+    opacity: .92;
+    transition: opacity 0.4s ease-in-out, visibility 0s 0s;
+}
+
+.btnClose {
+    width: 23px;
+    height: 23px;
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.popup_type_mainMenu {
+
+}
