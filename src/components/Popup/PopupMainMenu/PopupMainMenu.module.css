@@ -1,0 +1,59 @@
+.select {
+    position: relative;
+    width: 300px;
+    height: 48px;
+    border-radius: 12px;
+    line-height: 22px;
+    padding-left: 12px;
+    margin-bottom: 30px;
+    color: var(--text-color-middle)
+}
+
+.selectContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.optionDefault {
+    color: var(--text-color-middle)
+}
+
+.option {
+    color: var(--text-color-dark)
+}
+
+.checkboxList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.checkboxLabel {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.checkbox {
+    cursor: pointer;
+}
+/*.input {*/
+/*    position: relative;*/
+/*    width: 300px;*/
+/*    height: 48px;*/
+/*    border-radius: 12px;*/
+/*    line-height: 22px;*/
+/*    padding-left: 12px;*/
+/*    margin-bottom: 30px;*/
+/*}*/
+
+/*.input:focus {*/
+/*    box-shadow: inset 1px 1px 4px var(--background-tertiary);*/
+/*}*/
+
+/*.input::placeholder {*/
+/*    color: var(--text-color-middle);*/
+/*}*/

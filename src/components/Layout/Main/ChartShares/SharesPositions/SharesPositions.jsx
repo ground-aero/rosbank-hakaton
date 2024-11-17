@@ -17,7 +17,7 @@ function SharesPositions() {
             ? `${DB_URL}/api/v1/dashboard/employee_positions/?team=${isTeamId}`
             : `${DB_URL}/api/v1/dashboard/employee_positions/`;
 
-     console.log('isTeamId, url', isTeamId, url)
+    // console.log('isTeamId, url', isTeamId, url)
         try {
             let { data } = await axios.get(`${url}`, {
                 headers: {

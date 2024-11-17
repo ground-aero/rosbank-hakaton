@@ -1,4 +1,4 @@
-// components/Users/Popup.jsx
+// components/Users/PopupWithForm.jsx
 function Users() {
     return <div>Страница пользователей</div>;
 }
