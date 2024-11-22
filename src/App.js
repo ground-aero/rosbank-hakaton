@@ -5,16 +5,36 @@ import NotFound from './components/NotFound/NotFound'
 import { TeamContext } from './context/context';
 
 function App() {
-  const [isTeamId, setTeamId] = useState(5)
+  const [teams, setTeams] = useState([])
+  const [isTeamId, setTeamId] = useState(null)
+  const [isTeamName, setTeamName] = useState('')
+  const [isTeamTotal, setTeamTotal] = useState(0)
+  const [allEmployees, setAllEmployees] = useState([])
   const [isEmployeeId, setEmployeeId] = useState(null)
   const [selectedEmployeeName, setSelectedEmployeeName] = useState('')
-  const [isTeamTotal, setTeamTotal] = useState(0)
   const [isBusFactor, setBusFactor] = useState(0)
-  const [isTeamName, setTeamName] = useState('')
 
   return (
       <>
-        <TeamContext.Provider value={{ isEmployeeId, setEmployeeId, selectedEmployeeName, setSelectedEmployeeName, isTeamId, setTeamId, isTeamTotal, setTeamTotal, isBusFactor, setBusFactor, isTeamName, setTeamName }}>
+        <TeamContext.Provider value={{
+          teams,
+          setTeams,
+          isTeamId,
+          setTeamId,
+          isTeamName,
+          setTeamName,
+          isTeamTotal,
+          setTeamTotal,
+          allEmployees,
+          setAllEmployees,
+          isEmployeeId,
+          setEmployeeId,
+          selectedEmployeeName,
+          setSelectedEmployeeName,
+          isBusFactor,
+          setBusFactor
+        }}
+        >
           <Routes>
             <Route exact path='/' index={true}
                    element={<Layout/>}>

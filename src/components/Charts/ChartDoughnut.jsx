@@ -6,14 +6,15 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const CHART_COLORS = [
-    '#FF6384',
-    '#36A2EB',
-    '#FFCE56',
-    '#4BC0C0',
-    '#9966FF',
-    '#FF9F40',
-    '#7CBA3B',
-    '#EC932F'
+    '#FFAAAA',
+    '#98CFFF',
+    '#FFDA7C',
+    '#CBE7FF',
+    '#FFE8E1',
+    '#EFBC87',
+    '#D0E3BD',
+    '#BBBBBE',
+    '#A6A6D0'
 ];
 
 const ChartDoughnut = ({ data }) => {
