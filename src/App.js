@@ -9,7 +9,7 @@ function App() {
   const [isTeamId, setTeamId] = useState(null)
   const [isTeamName, setTeamName] = useState('')
   const [isTeamTotal, setTeamTotal] = useState(0)
-  const [allEmployees, setAllEmployees] = useState([])
+  const [employees, setEmployees] = useState([])
   const [isEmployeeId, setEmployeeId] = useState(null)
   const [selectedEmployeeName, setSelectedEmployeeName] = useState('')
   const [isBusFactor, setBusFactor] = useState(0)
@@ -25,8 +25,8 @@ function App() {
           setTeamName,
           isTeamTotal,
           setTeamTotal,
-          allEmployees,
-          setAllEmployees,
+          employees,
+          setEmployees,
           isEmployeeId,
           setEmployeeId,
           selectedEmployeeName,

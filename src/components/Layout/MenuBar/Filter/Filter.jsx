@@ -22,7 +22,7 @@ function Filter() {
     function handleSubmitForm(e) {
         e.preventDefault()
 
-        // api.getTeamNames({ isTeamId })
+        // api.getTeams({ isTeamId })
         // api. onChooseTeam({ isTeamId })
         // api. onChooseEmployee
 
