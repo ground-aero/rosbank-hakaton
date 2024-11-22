@@ -6,37 +6,36 @@ import api from "../../../api/api"
 
 function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
     const { teams, setTeams, isTeamId, setTeamId, isTeamName, setTeamName,
-        allEmployees, setAllEmployees, isEmployeeId, setEmployeeId, selectedEmployeeName, setSelectedEmployeeName} = useContext(TeamContext);
+        employees, setEmployees, isEmployeeId, setEmployeeId, selectedEmployeeName, setSelectedEmployeeName} = useContext(TeamContext);
     // const [ teams, setTeams ] = useState([])
 
     // Получаем список Команд при монтировании компонента
     useEffect(() => {
         const fetchTeams = async () => {
             try {
-                const data = await api.getTeamNames();
+                const data = await api.getTeams();
                 setTeams(data);
             } catch (err) {
                 console.error('Error fetching teams',err)
             }
         }
-
         fetchTeams()
     },[])
 
     // Получаем список всех Сотрудников при монтировании компонента
     useEffect(() => {
-        const fetchAllStaff = async () => {
+        const fetchEmployees = async () => {
             try {
-                const data = await api.getAllEmployees();
+                const data = await api.getEmployees();
 
                 // В контекст устанавливаем список всех сотрудников
-                setAllEmployees(data);
+                setEmployees(data);
           console.log("data", data)
             } catch (err) {
                 console.error('Error fetching teams',err)
             }
         }
-        fetchAllStaff()
+        fetchEmployees()
     },[])
 
     // Обработчик изменения выбора команды через select
@@ -72,7 +71,7 @@ function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
         setEmployeeId(numericEmployeeId)
 
         // В контекст устанавливаем имя выбранного сотрудника
-        const selectedEmployee = allEmployees.find(employee => Number(employee.id) === numericEmployeeId)
+        const selectedEmployee = employees.find(employee => Number(employee.id) === numericEmployeeId)
 
       console.log(selectedEmployee)
         if (selectedEmployee) {
@@ -114,9 +113,9 @@ function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
                     className={styles.select}
                 >
                     <option value="allStaff" className={styles.optionDefault}>--Все Сотрудники--</option>
-                    {(isTeamId === null
-                            ? allEmployees
-                            : allEmployees.filter(employee => employee.team_id === isTeamId)
+                    {( isTeamId === null
+                            ? employees
+                            : employees.filter(employee => employee.team === isTeamName)
                     ).map((employee) => (
                         <option
                             key={employee.id}

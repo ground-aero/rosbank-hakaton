@@ -3,7 +3,7 @@ import { DB_URL } from '../utils/constants';
 
 class Api {
 
-    async getTeamNames() {
+    async getTeams() {
         try {
             const response = await axios.get(`${DB_URL}/api/v1/teams`, {
                 headers: {
@@ -17,7 +17,7 @@ class Api {
         }
     }
 
-    async getAllEmployees() {
+    async getEmployees() {
         try {
             // const response = await axios.get(`${DB_URL}/api/v1/dashboard/suitability_position`, {
             const response = await axios.get(`${DB_URL}/api/v1/employees`, {

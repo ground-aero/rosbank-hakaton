@@ -47,7 +47,7 @@ function StaffJobFit() {
             if (isTeamId === null) {
                 setTeamName('');
             } else {
-                let data = await api.getTeamNames(isTeamId)
+                let data = await api.getTeams(isTeamId)
                 const teamName = data.find((team) => team.id === isTeamId)
                 console.log(teamName)
                 setTeamName(teamName.name);
