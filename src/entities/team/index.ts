@@ -1,1 +1,1 @@
-export { type TTeam, type TTeamName } from './types'
+export { type TTeam, type TEmployee, type TEmployeeSuitability, type TPosition } from './types'

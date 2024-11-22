@@ -76,8 +76,8 @@ const ChartLeftBars = ({ data }) => {
         datasets: [
             {
                 data: data.map(item => item.average_rating || item.skill_level),
-                backgroundColor: 'rgba(255, 218, 124, 0.6)',
-                borderColor: 'rgb(255, 218, 124)',
+                backgroundColor: 'rgba(152, 207, 255, 0.6)',
+                borderColor: 'rgb(152, 207, 255)',
                 borderWidth: 1,
             },
         ],

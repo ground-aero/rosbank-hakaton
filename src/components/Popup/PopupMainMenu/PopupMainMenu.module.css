@@ -23,23 +23,6 @@
     color: var(--text-color-dark)
 }
 
-.checkboxList {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-top: 1rem;
-}
-
-.checkboxLabel {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-}
-
-.checkbox {
-    cursor: pointer;
-}
 /*.input {*/
 /*    position: relative;*/
 /*    width: 300px;*/

@@ -93,6 +93,7 @@ a {
 .chartSubtitles {
   display: flex;
   position: absolute;
+  cursor: default;
 }
 
 .chartSubtitle {
