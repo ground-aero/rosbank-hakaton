@@ -32,7 +32,7 @@ function SharesPositions() {
         } finally {
             setFetchingData(false)
         }
-    }, [isTeamId, isTeamId]);
+    }, [isTeamId]);
 
     useEffect(() => {
         // if (isTeamId) {
@@ -43,7 +43,7 @@ function SharesPositions() {
 
     return (
         <div>
-            {isFetchingData ? (
+            { isFetchingData ? (
                 <p>Loading...</p>
             ) : (
                 <ChartDoughnut key={ isTeamId || 'team id ?'} data={ isAllPositions }/>

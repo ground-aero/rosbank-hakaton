@@ -17,7 +17,7 @@ function StaffJobFit() {
         setTeamTotal
     } = useContext(TeamContext);
 
-    console.log("isTeamId",isTeamId)
+ console.log("isTeamId",isTeamId)
     const getTeamsIdSuitPosition = useCallback(async () => {
         try {
 
