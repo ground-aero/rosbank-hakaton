@@ -10,12 +10,17 @@ function SkillsLevel() {
     const [isAllSkills, setAllSkills] = useState([])
 
     const fetchSkills = useCallback(async () => {
-        if (!isTeamId) return;
+        // if (!isTeamId) return;
 
         setFetchingData(true)
+        // let url = isEmployeeId
+        //     ? `${DB_URL}/api/v1/dashboard/suitability_position/${isEmployeeId}/skills`
+        //     : `${DB_URL}/api/v1/dashboard/skill_level/?team=${isTeamId}`;
         let url = isEmployeeId
             ? `${DB_URL}/api/v1/dashboard/suitability_position/${isEmployeeId}/skills`
-            : `${DB_URL}/api/v1/dashboard/skill_level/?team=${isTeamId}`;
+            : isTeamId === null
+              ? `${DB_URL}/api/v1/dashboard/skill_level`
+                    : `${DB_URL}/api/v1/dashboard/skill_level/?team=${isTeamId}`;
 
         try {
             let { data } = await axios.get(`${url}`, {
@@ -23,6 +28,7 @@ function SkillsLevel() {
                     'Accept': 'application/json',
                 },
             });
+    console.log('setAllSkills data:',data)
             setAllSkills(data)
             return data;
         } catch (err) {
@@ -33,14 +39,15 @@ function SkillsLevel() {
     }, [isEmployeeId, isTeamId]);
 
     useEffect(() => {
-        if (isTeamId) {
-            fetchSkills();
-        }
+        // if (isTeamId) {
+        //     fetchSkills();
+        // }
+        fetchSkills();
     }, [isTeamId, fetchSkills]);
 
     return (
         <div>
-            {isFetchingData ? (
+            { isFetchingData ? (
                 <p>Loading...</p>
             ) : (
                 <ChartLeftBars key={isEmployeeId || 'team'} data={isAllSkills}/>

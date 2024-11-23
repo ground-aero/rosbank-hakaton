@@ -44,10 +44,10 @@ function ChartSkills() {
                 </div>
             </div>
 
-            {/* sub-chart content */}
+            {/* 1-st sub-chart content */}
             <div className={globalStyles.tabContentChart}>
                 <div className={globalStyles.scrollableContent}>
-                    {activeTab === 'skillsLevel' ? <SkillsLevel/> : <SkillsPoints/>}
+                    { activeTab === 'skillsLevel' ? <SkillsLevel/> : <SkillsPoints/>}
                 </div>
             </div>
 
