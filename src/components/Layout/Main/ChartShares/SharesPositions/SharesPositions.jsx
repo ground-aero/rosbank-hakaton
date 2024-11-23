@@ -10,7 +10,7 @@ function SharesPositions() {
     const [isAllPositions, setAllPositions] = useState([])
 
     const fetchEmployeePositions = useCallback(async () => {
-        if (!isTeamId) return;
+        // if (!isTeamId) return;
 
         setFetchingData(true)
         let url = isTeamId
@@ -35,9 +35,10 @@ function SharesPositions() {
     }, [isTeamId, isTeamId]);
 
     useEffect(() => {
-        if (isTeamId) {
+        // if (isTeamId) {
+        //     fetchEmployeePositions();
+        // }
             fetchEmployeePositions();
-        }
     }, [isTeamId, fetchEmployeePositions]);
 
     return (
@@ -45,7 +46,7 @@ function SharesPositions() {
             {isFetchingData ? (
                 <p>Loading...</p>
             ) : (
-                <ChartDoughnut key={isTeamId || 'team id ?'} data={isAllPositions}/>
+                <ChartDoughnut key={ isTeamId || 'team id ?'} data={ isAllPositions }/>
             )}
         </div>
     )
