@@ -18,7 +18,7 @@ function ChartShares() {
                     onClick={() => setActiveTab('staffPositions')}
                 >
                     <p>Должности сотрудников</p>
-                    {activeTab === 'staffPositions'
+                    { activeTab === 'staffPositions'
                         ?
                         <div className={globalStyles.chartSubtitles}>
                             <p className={globalStyles.chartSubtitle}>
@@ -44,11 +44,11 @@ function ChartShares() {
                 </div>
             </div>
 
-            {/* sub-chart content */}
+            {/* 1-st sub-chart content */}
             <div className={globalStyles.tabContentChart}>
 
                 <div>
-                    {activeTab === 'staffPositions' ? <SharesPositions/> : ""}
+                    { activeTab === 'staffPositions' ? <SharesPositions/> : ""}
                 </div>
 
             </div>

@@ -141,6 +141,7 @@ a {
 .tabContentChart {
   flex-grow: 1;
   padding-top: 30px;
+  padding-bottom: 42px;
   height: 100%;
   overflow: hidden;
 }
