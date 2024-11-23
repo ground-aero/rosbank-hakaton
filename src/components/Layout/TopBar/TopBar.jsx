@@ -1,57 +1,35 @@
+import { NavLink } from 'react-router-dom';
+import globalStyles from '../../../globals.module.css';
 import styles from './TopBar.module.css';
-import Filter from "../../../images/filter.png";
-import { TeamContext } from "../../../context/context";
-import {useContext, useEffect, useState} from "react";
-import axios from "axios";
+import BtnEmpty from '../../../images/btn_empty.png';
+import Men from '../../../images/btn_users.png';
+import UserImg from '../../../images/user_img.png';
+import { useState } from "react";
 
 function TopBar() {
-    const { isTeamTotal, isTeamId, isBusFactor, setBusFactor } = useContext(TeamContext);
-    // const [isTeamId, setTeamId] = useState(5);
-    const [isSkillName, setSkillName] = useState("");
-
-    useEffect(() => {
-        fetchBusFactor();
-    }, [isTeamId]);
-
-    const fetchBusFactor = async () => {
-        const db_url = `https://dashboard-t5.hopto.org/api/v1/dashboard/bus_factor/?team=${isTeamId}`;
-        try {
-            let { data } = await axios.get(`${db_url}`, {
-                headers: {
-                    'Accept': 'application/json',
-                },
-            });
-            // console.log(data, data.length);
-            setBusFactor(data.bus_factor);
-            setSkillName(data.skill);
-            console.log(data)
-        } catch (err) {
-            console.error(err);
-        } finally {
-
-        }
-    };
+    const [activeBtn, setActiveBtn] = useState('men');
 
     return (
-        <section id='topbar' className={styles.topBar}>
+        <section id='topbar' className={`${styles.topBar} ${globalStyles.section}`}>
 
-            {/* 2 small data windows */}
-            <section className={styles.wrapData}>
-                <div className={styles.innerData}>
-                    <div className={styles.innerNum}>{`${isTeamTotal}`}</div>
-                    <div className={styles.innerText}>Всего в команде</div>
-                </div>
-
-                <div className={`${styles.innerData} ${styles.innerDataBusFactor}`} title={`Навык: ${isSkillName}`}>
-                    <div className={styles.innerNum}>{`${isBusFactor}`}</div>
-                    <div className={styles.innerText}>Bus-фактор</div>
-                </div>
-            </section>
-
-            {/* 2 buttons */}
-            <div className={styles.btns}>
-                <img src={Filter} className={styles.chartsFilter} alt={'filter'}/>
-            </div>
+            <aside className={styles.topBarInnerBar}>
+                <ul className={styles.innerHalf}>
+                    <li className={styles.btnWrap}>
+                        <img src={BtnEmpty} className={styles.innerIconBg} alt="btn empty" />
+                    </li>
+                    <li className={styles.btnWrap}>
+                        <img src={BtnEmpty} className={styles.innerIconBg} alt="btn empty" />
+                    </li>
+                    <li className={`${styles.btnWrap} ${activeBtn === 'men' ? styles.active : ''}`}>
+                        <NavLink to="/" end onClick={() => setActiveBtn('men')}>
+                            <img src={Men} className={styles.innerIconBg} alt="men" />
+                        </NavLink>
+                    </li>
+                </ul>
+                <ul className={styles.innerHalf}>
+                    <img src={UserImg} className={`${styles.innerIconBg} ${styles.innerUserImg}`} alt="user" />
+                </ul>
+            </aside>
 
         </section>
     );

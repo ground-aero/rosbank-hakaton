@@ -1,33 +1,68 @@
-import { useState } from 'react';
+import {useContext, useState} from 'react';
+import globalStyles from '../../../../globals.module.css'
 import styles from './ChartStaff.module.css';
 import StaffJobFit from './StaffJobFit/StaffJobFit';
 import StaffSkilledNum from './StaffSkilledNum/StaffSkilledNum';
+import { TeamContext } from '../../../../context/context'
 
 function ChartStaff() {
-    const [activeTab, setActiveTab] = useState('skillsLevel');
+    const { teams, isTeamName, selectedEmployeeName} = useContext(TeamContext);
+    const [activeTab, setActiveTab] = useState('staffJobFit');
 
+ console.log('isTeamName, teams', isTeamName, teams)
     return (
-        <section id='chartStaff' className={styles.chartStaff}>
+        <section id='chartStaff' className={`${globalStyles.chart} ${styles.chartStaff}`}>
 
-            <div className={styles.tabsChart}>
-                <div
-                    className={`${styles.tabChart} ${activeTab === 'skillsLevel' ? styles.active : ''}`}
-                    onClick={() => setActiveTab('skillsLevel')}
+            <div className={globalStyles.tabsChart}>
+
+                {/* 1-st tab */}
+                <div className={`${globalStyles.tabChart} ${activeTab === 'staffJobFit' ? globalStyles.active : ''}`}
+                     onClick={() => setActiveTab('staffJobFit')}
                 >
                     <p>Соответствие должности</p>
+                    {activeTab === 'staffJobFit'
+                        ? <div className={globalStyles.chartSubtitles}>
+                            <p className={globalStyles.chartSubtitle}>
+                                Сотрудник •
+                                <span
+                                    className={globalStyles.chartSubtitleSpan}>{selectedEmployeeName || '[ НЕ ВЫБРАН ]'}
+                                </span>
+                            </p>
+                            <p className={globalStyles.chartSubtitle}>
+                                Команда •
+                                <span
+                                    className={globalStyles.chartSubtitleSpan}>{ isTeamName || '[ НЕ ВЫБРАНА ]'}
+                                </span>
+                            </p>
+                        </div>
+                        :
+                        <p className={`${globalStyles.chartSubtitle} ${activeTab !== 'staffJobFit' ? globalStyles.active : ""}`}>
+                            Другое •
+                        </p>
+                    }
                 </div>
 
-                <div
-                    className={`${styles.tabChart} ${activeTab === 'staffNums' ? styles.active : ''}`}
-                    onClick={() => setActiveTab('staffNums')}
+                {/* 2-nd tab */}
+                <div className={`${globalStyles.tabChart} ${activeTab === 'staffNums' ? globalStyles.active : ''}`}
+                     onClick={() => setActiveTab('staffNums')}
                 >
-                    Количество сотрудников, владеющих навыками
+                    <p>Количество сотрудников, владеющих навыками</p>
                 </div>
             </div>
 
-            <div className={styles.tabContentChart}>
-                <div className={styles.scrollableContent}>
-                    {activeTab === 'skillsLevel' ? <StaffJobFit /> : <StaffSkilledNum />}
+
+            {/* sub-chart content */}
+            <div className={globalStyles.tabContentChart}>
+
+                {activeTab === 'staffJobFit'
+                    ? <p className={`${globalStyles.tableHeader}`}>
+                        Доля навыков с удовлетворительной оценкой
+                    </p>
+                    : ""
+                }
+
+                <div className={globalStyles.scrollableContent}>
+                    {activeTab === 'staffJobFit' ? <StaffJobFit/> : <StaffSkilledNum/>}
                 </div>
             </div>
 
