@@ -23,6 +23,9 @@ const ChartDoughnut = ({ data }) => {
         return <div>Нет данных для отображения</div>;
     }
 
+ // console.log('Входные данные:', JSON.stringify(data, null, 2));
+    console.log('Входные данные:', data);
+
     // Готовим данные для графика
     const chartData = {
         labels: data.map(item => item.position),

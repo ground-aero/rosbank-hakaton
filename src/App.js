@@ -11,7 +11,7 @@ function App() {
   const [isTeamTotal, setTeamTotal] = useState(0)
   const [employees, setEmployees] = useState([])
   const [isEmployeeId, setEmployeeId] = useState(null)
-  const [selectedEmployeeName, setSelectedEmployeeName] = useState('')
+  const [selectedEmployee, setSelectedEmployee] = useState( {})
   const [isBusFactor, setBusFactor] = useState(0)
 
   return (
@@ -29,8 +29,8 @@ function App() {
           setEmployees,
           isEmployeeId,
           setEmployeeId,
-          selectedEmployeeName,
-          setSelectedEmployeeName,
+          selectedEmployee,
+          setSelectedEmployee,
           isBusFactor,
           setBusFactor
         }}
