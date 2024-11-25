@@ -5,22 +5,21 @@ import { TeamContext } from "../../../../../context/context"
 
 function StaffJobFit() {
     const [isTeamSuitStaff, setTeamSuitStaff] = useState([]);
-    const [currentView, setCurrentView] = useState('teamStaff'); // 'teamStaff' or 'employeeName'
+    const [currentView, setCurrentView] = useState('teamStaff');
     const {
+        employees,
         isEmployeeId,
         setEmployeeId,
-        selectedEmployeeName,
-        setSelectedEmployeeName,
+        selectedEmployee,
+        setSelectedEmployee,
         isTeamId,
         isTeamName,
         setTeamName,
         setTeamTotal
     } = useContext(TeamContext);
 
- console.log("isTeamId",isTeamId)
     const getTeamsIdSuitPosition = useCallback(async () => {
         try {
-
             if (isTeamId === null) {
                 let data = await api.getTeamsAllSuitPosition()
                 setTeamSuitStaff(data);
@@ -32,7 +31,6 @@ function StaffJobFit() {
                 setTeamTotal(data?.length);
                 setCurrentView('teamStaff');
             }
-
         } catch (err) {
             console.error(err);
         }
@@ -49,39 +47,62 @@ function StaffJobFit() {
             } else {
                 let data = await api.getTeams(isTeamId)
                 const teamName = data.find((team) => team.id === isTeamId)
-                console.log(teamName)
                 setTeamName(teamName.name);
             }
         } catch (err) {
             console.error(err);
         }
-    }, [isTeamId]);
+    }, [isTeamId, setTeamName]);
 
     useEffect(() => {
         getTeamName();
     }, [getTeamName]);
 
     const handleRowClick = useCallback((clickedEmployeeId, clickedEmployeeName) => {
-        if (clickedEmployeeId === isEmployeeId) {
+        console.log("Clicked Employee ID, clickedEmployeeName:", clickedEmployeeId,clickedEmployeeName);
+        console.log("Current employees array:", employees);
+
+        if (Number(clickedEmployeeId) === Number(isEmployeeId)) {
             setEmployeeId(null);
-            setSelectedEmployeeName('');
+            setSelectedEmployee({});
             setCurrentView('teamStaff');
         } else {
             setEmployeeId(clickedEmployeeId);
-            setSelectedEmployeeName(clickedEmployeeName);
+
+            // Находим сотрудника в массиве employees
+            const selectedEmployeeLocal = employees.find(employee => {
+                return Number(employee.id) === Number(clickedEmployeeId);
+            });
+
+            console.log("Found employee:", selectedEmployeeLocal);
+
+            // Разбиваем имя на ФИО
+            const [lastName, firstName] = clickedEmployeeName.split(' ');
+
+            // Создаем объект с обогащенными полями из объекта employees
+            const employeeEnrichedObject = {
+                last_name: lastName,
+                first_name: firstName,
+                id: Number(clickedEmployeeId),
+                position: selectedEmployeeLocal?.position || '',
+                grade: selectedEmployeeLocal?.grade || '',
+                team: selectedEmployeeLocal?.team || ''
+            };
+
+          console.log("Created employee object:", employeeEnrichedObject);
+
+            setSelectedEmployee(employeeEnrichedObject);
             setCurrentView('teamStaff');
         }
-    }, [isEmployeeId, setEmployeeId]);
+    }, [isEmployeeId, setEmployeeId, setSelectedEmployee, employees]);
 
     useEffect(() => {
-        // Switch to employee name view when selectedEmployeeName is set
-        if (selectedEmployeeName) {
+        if (selectedEmployee) {
             setCurrentView('teamStaff');
         }
-    }, [selectedEmployeeName]);
+    }, [selectedEmployee]);
 
     useEffect(() => {
-        // Switch back to team staff view when team name changes
         if (isTeamName) {
             setCurrentView('teamStaff');
         }
@@ -91,30 +112,31 @@ function StaffJobFit() {
         <table className={globalStyles.table}>
             <tbody>
             { currentView === 'teamStaff' ? (
-
                 isTeamSuitStaff?.length === 0 ? (
                     <tr className={globalStyles.tableRow}>
-                        <td colSpan="2" className={globalStyles.tableColLeft}>В фильтре выберите Команду</td>
+                        <td colSpan="2" className={globalStyles.tableColLeft}>В фильтре выберите данные</td>
                     </tr>
                 ) : (
-                        isTeamSuitStaff.map((employee, i) => (
-                            <tr
-                                key={i}
-                                onClick={() => handleRowClick(employee.employee_id, employee.employee)}
-                                className={`${globalStyles.tableRow} ${isEmployeeId === employee.employee_id ? globalStyles.tableRowSelected : ''}`}
-                                style={{ cursor: 'pointer' }}
-                            >
-                                <td className={globalStyles.tableColLeft}>{employee.employee}</td>
-                                <td className={globalStyles.tableColRight}>{`${employee.percentage}%`}</td>
-                            </tr>
-                        ))
-                    )
-
-
+                    isTeamSuitStaff.map((employee, i) => (
+                        <tr
+                            key={i}
+                            onClick={() => handleRowClick(
+                                employee.employee_id,
+                                employee.employee
+                            )}
+                            className={`${globalStyles.tableRow} ${isEmployeeId === employee.employee_id ? globalStyles.tableRowSelected : ''}`}
+                            style={{ cursor: 'pointer' }}
+                        >
+                            <td className={globalStyles.tableColLeft}>{employee.employee}</td>
+                            <td className={globalStyles.tableColRight}>{`${employee.percentage}%`}</td>
+                        </tr>
+                    ))
+                )
             ) : (
                 <tr className={globalStyles.tableRow}>
-                    <td colSpan="2" className={globalStyles.tableColLeft}>
-                        { selectedEmployeeName }
+                    <td className={globalStyles.tableColLeft}>
+                        {`${selectedEmployee.last_name} ${selectedEmployee.first_name}`}
+                        {selectedEmployee.position && ` - ${selectedEmployee.position}`}
                     </td>
                     <td className={globalStyles.tableColRight}>{`${'percentage'}%`}</td>
                 </tr>

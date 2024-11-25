@@ -11,7 +11,7 @@ interface TeamContextType {
     employees: [],
     setEmployees: Dispatch<SetStateAction<any>>,
     isEmployeeId: number | null,
-    selectedEmployeeName: string | '',
+    selectedEmployee: null | {},
     isBusFactor: number,
     setBusFactor: Dispatch<SetStateAction<number>>,
 }
@@ -27,7 +27,7 @@ export const TeamContext = React.createContext<TeamContextType>({
     employees: [],
     setEmployees: () => {},
     isEmployeeId: null,
-    selectedEmployeeName: '',
+    selectedEmployee: {},
     isBusFactor: 0,
     setBusFactor: () => {}, // Заглушка для setBusFactor
 });

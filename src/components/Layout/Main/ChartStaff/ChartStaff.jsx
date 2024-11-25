@@ -6,10 +6,11 @@ import StaffSkilledNum from './StaffSkilledNum/StaffSkilledNum';
 import { TeamContext } from '../../../../context/context'
 
 function ChartStaff() {
-    const { teams, isTeamName, selectedEmployeeName} = useContext(TeamContext);
+    const { teams, isTeamName, selectedEmployee} = useContext(TeamContext);
     const [activeTab, setActiveTab] = useState('staffJobFit');
 
- console.log('isTeamName, teams', isTeamName, teams)
+ console.log('isTeamName, teams', "selectedEmployee:", isTeamName, teams, selectedEmployee)
+
     return (
         <section id='chartStaff' className={`${globalStyles.chart} ${styles.chartStaff}`}>
 
@@ -25,7 +26,7 @@ function ChartStaff() {
                             <p className={globalStyles.chartSubtitle}>
                                 Сотрудник •
                                 <span
-                                    className={globalStyles.chartSubtitleSpan}>{selectedEmployeeName || '[ НЕ ВЫБРАН ]'}
+                                    className={globalStyles.chartSubtitleSpan}>{ Object.keys(selectedEmployee).length === 0 ? '[ НЕ ВЫБРАН ]' : `${selectedEmployee.last_name} ${selectedEmployee.first_name}` }
                                 </span>
                             </p>
                             <p className={globalStyles.chartSubtitle}>
