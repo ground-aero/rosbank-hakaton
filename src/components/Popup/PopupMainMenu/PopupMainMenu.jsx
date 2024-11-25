@@ -6,7 +6,7 @@ import api from "../../../api/api"
 
 function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
     const { teams, setTeams, isTeamId, setTeamId, isTeamName, setTeamName,
-        employees, setEmployees, isEmployeeId, setEmployeeId, selectedEmployeeName, setSelectedEmployeeName} = useContext(TeamContext);
+        employees, setEmployees, isEmployeeId, setEmployeeId, selectedEmployee, setSelectedEmployee} = useContext(TeamContext);
     // const [ teams, setTeams ] = useState([])
 
     // Получаем список Команд при монтировании компонента
@@ -57,7 +57,7 @@ function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
         if (teamId === "allTeams") {
             // Show all employees when "All Teams" is selected
             setEmployeeId(null);
-            setSelectedEmployeeName('');
+            setSelectedEmployee({});
         }
     }
 
@@ -71,14 +71,16 @@ function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
         setEmployeeId(numericEmployeeId)
 
         // В контекст устанавливаем имя выбранного сотрудника
-        const selectedEmployee = employees.find(employee => Number(employee.id) === numericEmployeeId)
+        const selectedEmployeeLocal = employees.find(employee => Number(employee.id) === numericEmployeeId)
 
-      console.log(selectedEmployee)
-        if (selectedEmployee) {
-            setSelectedEmployeeName(`${selectedEmployee.last_name} ${selectedEmployee.first_name}`)
-            console.log(selectedEmployeeName)
+         console.log(selectedEmployeeLocal)
+
+        if (selectedEmployeeLocal.last_name) {
+            // setSelectedEmployee(`${selectedEmployeeLocal.last_name} ${selectedEmployeeLocal.first_name}`)
+            setSelectedEmployee(selectedEmployeeLocal)
         }
     }
+    console.log("selectedEmployee:",selectedEmployee)
 
     // console.log(onOpen)
     return (
