@@ -7,7 +7,6 @@ import api from "../../../api/api"
 function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
     const { teams, setTeams, isTeamId, setTeamId, isTeamName, setTeamName,
         employees, setEmployees, isEmployeeId, setEmployeeId, selectedEmployee, setSelectedEmployee} = useContext(TeamContext);
-    // const [ teams, setTeams ] = useState([])
 
     // Получаем список Команд при монтировании компонента
     useEffect(() => {
@@ -42,7 +41,7 @@ function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
     const handleTeamChange = (teamId) => {
         const numericTeamId = Number(teamId) || null
 
-        // В контекст устанавливаем id выбранной команды (teamId)
+        // В контекст устанавливаем id выбранной команды (teamId), или  null если все команды
         setTeamId(numericTeamId || null)
 
         // В контекст устанавливаем имя выбранной команды
@@ -52,31 +51,29 @@ function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
             setTeamName(selectedTeam.name || '')
         }
 
-     console.log(teamId)
-        // Filter employees based on selected team
-        if (teamId === "allTeams") {
-            // Show all employees when "All Teams" is selected
-            setEmployeeId(null);
-            setSelectedEmployee({});
-        }
+     console.log('teamId:',teamId)
+        // Show all employees when "All Teams" is selected
+        setEmployeeId(null);
+        setSelectedEmployee({});
     }
 
    console.log("isTeamId, isTeamName", isTeamId, isTeamName)
 
     // Обработчик изменения выбора сотрудника через select
     const handleEmployeeChange = (employeeId) => {
-        const numericEmployeeId = Number(employeeId)
+        const numericEmployeeId = Number(employeeId) || null
 
         // В контекст устанавливаем id выбранного сотрудника
+        setTeamId(null)
         setEmployeeId(numericEmployeeId)
 
         // В контекст устанавливаем имя выбранного сотрудника
         const selectedEmployeeLocal = employees.find(employee => Number(employee.id) === numericEmployeeId)
 
-         console.log(selectedEmployeeLocal)
+         console.log('selectedEmployeeLocal, isTeamId::',selectedEmployeeLocal, isTeamId)
 
-        if (selectedEmployeeLocal.last_name) {
-            // setSelectedEmployee(`${selectedEmployeeLocal.last_name} ${selectedEmployeeLocal.first_name}`)
+        if (selectedEmployeeLocal?.last_name) {
+            setTeamId(null)
             setSelectedEmployee(selectedEmployeeLocal)
         }
     }
@@ -91,8 +88,6 @@ function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
             onClose={onClose}
             textBtn={textBtn}
         >
-            <p>children...</p>
-
             <div className={styles.selectContainer}>
                 <select
                     name='team'
@@ -100,8 +95,8 @@ function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
                     onChange={(e) => handleTeamChange(e.target.value)}
                     className={styles.select}
                 >
-                    <option value="allTeams" className={styles.optionDefault}>--Все Команды--</option>
-                    { teams.map((team) => (
+                    <option value="allTeams" className={styles.optionDefault}>--Команды--</option>
+                    {teams.map((team) => (
                         <option key={team.id} value={team.id} className={styles.option}>
                             {team.name}
                         </option>
@@ -114,8 +109,8 @@ function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
                     onChange={(e) => handleEmployeeChange(e.target.value)}
                     className={styles.select}
                 >
-                    <option value="allStaff" className={styles.optionDefault}>--Все Сотрудники--</option>
-                    {( isTeamId === null
+                    <option value="allStaff" className={styles.optionDefault}>--Сотрудники--</option>
+                    {(isTeamId === null
                             ? employees
                             : employees.filter(employee => employee.team === isTeamName)
                     ).map((employee) => (

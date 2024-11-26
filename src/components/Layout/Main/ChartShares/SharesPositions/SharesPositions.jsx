@@ -5,50 +5,60 @@ import { DB_URL } from "../../../../../utils/constants";
 import ChartDoughnut from '../../../../Charts/ChartDoughnut'
 
 function SharesPositions() {
-    const { isTeamId } = useContext(TeamContext);
-    const [isFetchingData, setFetchingData] = useState(false)
-    const [isAllPositions, setAllPositions] = useState([])
+    const { isTeamId, setTeamId, selectedEmployee, setSelectedEmployee } = useContext(TeamContext);
+    const [ isFetchingData, setFetchingData] = useState(false)
+    const [ isAllPositions, setAllPositions] = useState([])
 
+    console.log('isTeamId, selectedEmployee::',isTeamId, Object.keys(selectedEmployee).length)
     const fetchEmployeePositions = useCallback(async () => {
-        // if (!isTeamId) return;
+        setFetchingData(true);
 
-        setFetchingData(true)
-        let url = isTeamId
-            ? `${DB_URL}/api/v1/dashboard/employee_positions/?team=${isTeamId}`
-            : `${DB_URL}/api/v1/dashboard/employee_positions/`;
-
-    // console.log('isTeamId, url', isTeamId, url)
         try {
-            let { data } = await axios.get(`${url}`, {
-                headers: {
-                    'Accept': 'application/json',
-                },
-            });
-            setAllPositions(data)
-     console.log('setAllPositions data:', data)
-            return data;
+            let url = '';
+            let responseData = [];
+
+            // Prioritize employee selection
+            if (selectedEmployee && Object.keys(selectedEmployee).length > 0) {
+
+                url = `${DB_URL}/api/v1/dashboard/employee_positions/?employee=${selectedEmployee.id}`;
+                const { data } = await axios.get(url, {
+                    headers: { 'Accept': 'application/json' },
+                });
+                responseData = data;
+            }
+            // Clear selectedEmployee when team is selected
+            else if (isTeamId || isTeamId === null) {
+
+                url = isTeamId
+                    ? `${DB_URL}/api/v1/dashboard/employee_positions/?team=${isTeamId}`
+                    : `${DB_URL}/api/v1/dashboard/employee_positions/`;
+
+                const { data } = await axios.get(url, {
+                    headers: { 'Accept': 'application/json' },
+                });
+                responseData = data;
+            }
+
+            setAllPositions(responseData);
         } catch (err) {
-            console.error(err)
+            console.error(err);
         } finally {
-            setFetchingData(false)
+            setFetchingData(false);
         }
-    }, [isTeamId]);
+    }, [isTeamId, selectedEmployee]); //selectedEmployee
 
     useEffect(() => {
-        // if (isTeamId) {
-        //     fetchEmployeePositions();
-        // }
-            fetchEmployeePositions();
-    }, [isTeamId, fetchEmployeePositions]);
+        fetchEmployeePositions();
+    }, [fetchEmployeePositions]);
 
     return (
-        <div>
-            { isFetchingData ? (
-                <p>Loading...</p>
+        <>
+            {isFetchingData ? (
+                <div>Loading...</div>
             ) : (
-                <ChartDoughnut key={ isTeamId || 'team id ?'} data={ isAllPositions }/>
+                <ChartDoughnut data={isAllPositions} />
             )}
-        </div>
+        </>
     )
 }
 
