@@ -6,19 +6,18 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const CHART_COLORS = [
-    '#FFAAAA',
+    '#CBE7FF',
+    '#A6A6D0',
     '#98CFFF',
     '#FFDA7C',
-    '#CBE7FF',
     '#FFE8E1',
     '#EFBC87',
     '#D0E3BD',
     '#BBBBBE',
-    '#A6A6D0'
+    '#FFAAAA',
 ];
 
 const ChartDoughnut = ({ data }) => {
-    // Проверяем, что данные существуют
     if (!data || data.length === 0) {
         return <div>Нет данных для отображения</div>;
     }
@@ -31,7 +30,7 @@ const ChartDoughnut = ({ data }) => {
         labels: data.map(item => item.position),
         datasets: [
             {
-                data: data.map(item => item.percentage),
+                data: data.map((item) => item.percentage),
                 backgroundColor: CHART_COLORS.slice(0, data.length),
                 borderColor: CHART_COLORS.slice(0, data.length),
                 borderWidth: 1,

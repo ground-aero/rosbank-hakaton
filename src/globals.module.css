@@ -83,11 +83,13 @@ a {
   border-radius: 12px;
   background-color: #FFF;
   border: 1px solid var(--text-color-light);
+  box-shadow: none;
+  transition: all .25s ease-in-out;
 }
 
 .chart:hover {
-  border: 1px solid var(--background-tertiary);
-  box-shadow: 0 0 4px 0 rgba(0,0,0,0.2);
+  border: 2px solid var(--text-color-light);
+  box-shadow: 2pxgit 0 3px 0 rgba(0,0,0,0.2);
 }
 
 .chartSubtitles {
