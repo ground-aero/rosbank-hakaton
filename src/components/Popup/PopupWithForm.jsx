@@ -6,7 +6,7 @@ function PopupWithForm({ name, children, onOpen, onClose, onSubmit, textBtn }) {
     return (
             <div className={`${styles.popup} ${styles[`popup_type_${name}`]} ${ onOpen ? styles.popup_opened : ''}`}>
                 <button onClick={ onClose } className={styles.btnClose} type='button' aria-label='close'>X</button>
-                Popup with form:
+
                 <form
                     name={ name }
                     onSubmit={ onSubmit }
