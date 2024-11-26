@@ -5,8 +5,18 @@ import { TeamContext } from "../../../context/context"
 import api from "../../../api/api"
 
 function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
-    const { teams, setTeams, isTeamId, setTeamId, isTeamName, setTeamName,
-        employees, setEmployees, isEmployeeId, setEmployeeId, selectedEmployee, setSelectedEmployee} = useContext(TeamContext);
+    const { teams,
+        setTeams,
+        isTeamId,
+        setTeamId, isTeamName,
+        setTeamName,
+        employees,
+        setEmployees,
+        isEmployeeId,
+        setEmployeeId,
+        selectedEmployee,
+        setSelectedEmployee
+    } = useContext(TeamContext);
 
     // Получаем список Команд при монтировании компонента
     useEffect(() => {

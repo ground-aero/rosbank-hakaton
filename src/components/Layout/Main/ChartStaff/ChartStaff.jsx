@@ -7,7 +7,7 @@ import { TeamContext } from '../../../../context/context'
 
 function ChartStaff() {
     const { teams, isTeamName, selectedEmployee} = useContext(TeamContext);
-    const [activeTab, setActiveTab] = useState('staffJobFit');
+    const [ activeTab, setActiveTab ] = useState('staffJobFit');
 
  console.log('isTeamName, teams', "selectedEmployee:", isTeamName, teams, selectedEmployee)
 

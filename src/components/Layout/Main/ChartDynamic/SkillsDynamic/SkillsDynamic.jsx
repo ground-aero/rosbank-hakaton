@@ -2,15 +2,15 @@ import { useState, useEffect, useContext, useCallback } from 'react'
 import axios from 'axios'
 import { TeamContext } from '../../../../../context/context'
 import { DB_URL } from "../../../../../utils/constants";
-import ChartDoughnut from '../../../../Charts/ChartDoughnut'
+import ChartDynamicSkills from '../../../../Charts/ChartDynamicSkills'
 
-function SharesPositions() {
+function SkillsDynamic() {
     const { isTeamId, selectedEmployee } = useContext(TeamContext);
     const [ isFetchingData, setFetchingData] = useState(false)
-    const [ isAllPositions, setAllPositions] = useState([])
+    const [ isAllPoints, setAllPoints] = useState([])
 
-  console.log('isTeamId, selectedEmployee::',isTeamId, Object.keys(selectedEmployee).length)
-    const fetchEmployeePositions = useCallback(async () => {
+    // console.log('isTeamId, selectedEmployee::',isTeamId, Object.keys(selectedEmployee).length)
+    const fetchSkillsDynamic = useCallback(async () => {
         setFetchingData(true);
 
         try {
@@ -18,20 +18,20 @@ function SharesPositions() {
             let responseData = [];
 
             // Prioritize employee selection
+            // Prioritize employee selection
             if (selectedEmployee && Object.keys(selectedEmployee).length > 0) {
 
-                url = `${DB_URL}/api/v1/dashboard/employee_positions/?employee=${selectedEmployee.id}`;
+                url = `${DB_URL}/api/v1/dashboard/skills_development/?employee=${selectedEmployee.id}`;
                 const { data } = await axios.get(url, {
                     headers: { 'Accept': 'application/json' },
                 });
                 responseData = data;
-            }
-            // Clear selectedEmployee when team is selected
-            else if (isTeamId || isTeamId === null) {
+
+            } else if (isTeamId || isTeamId === null) {
 
                 url = isTeamId
-                    ? `${DB_URL}/api/v1/dashboard/employee_positions/?team=${isTeamId}`
-                    : `${DB_URL}/api/v1/dashboard/employee_positions/`;
+                        ? `${DB_URL}/api/v1/dashboard/skills_development/?team=${isTeamId}`
+                        : `${DB_URL}/api/v1/dashboard/skills_development`;
 
                 const { data } = await axios.get(url, {
                     headers: { 'Accept': 'application/json' },
@@ -39,7 +39,7 @@ function SharesPositions() {
                 responseData = data;
             }
 
-            setAllPositions(responseData);
+            setAllPoints(responseData);
         } catch (err) {
             console.error(err);
         } finally {
@@ -48,18 +48,19 @@ function SharesPositions() {
     }, [isTeamId, selectedEmployee]); //selectedEmployee
 
     useEffect(() => {
-        fetchEmployeePositions();
-    }, [fetchEmployeePositions]);
+        fetchSkillsDynamic();
+    }, [fetchSkillsDynamic]);
 
     return (
         <>
-            {isFetchingData ? (
+            { isFetchingData ? (
                 <div>Loading...</div>
             ) : (
-                <ChartDoughnut data={isAllPositions} />
+                <ChartDynamicSkills data={ isAllPoints } />
+                // <div>Chart Dynamic.</div>
             )}
         </>
     )
 }
 
-export default SharesPositions
+export default SkillsDynamic
