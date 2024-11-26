@@ -61,11 +61,10 @@ class Api {
         }
     }
 
-    // data for MenuBar
-    async getBusFactor(teamId) {
+    // data for Dynamic Skills & 1-st Chart Dynamic Skills (down right)
+    async getSkillsDynamic() {
         try {
-            const response = await axios.get(`${DB_URL}/api/v1/dashboard/bus_factor/?team=${teamId}`, {
-                params: {team: teamId}, // @params для добавления query параметров
+            const response = await axios.get(`${DB_URL}/api/v1/dashboard/skills_development`, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
@@ -81,6 +80,22 @@ class Api {
     async getEmployeePositions(teamId) {
         try {
             const response = await axios.get(`${DB_URL}/api/v1/dashboard/employee_positions/?team=${teamId}`, {
+                params: {team: teamId}, // @params для добавления query параметров
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            });
+            return response.data;
+        } catch (error) {
+            throw new Error(`Ошибка: ${error.response?.status} ${error.response?.statusText}`);
+        }
+    }
+
+    // data for MenuBar
+    async getBusFactor(teamId) {
+        try {
+            const response = await axios.get(`${DB_URL}/api/v1/dashboard/bus_factor/?team=${teamId}`, {
                 params: {team: teamId}, // @params для добавления query параметров
                 headers: {
                     'Accept': 'application/json',

@@ -4,6 +4,7 @@ import styles from './Main.module.css'
 import ChartStaff from "./ChartStaff/ChartStaff"
 import ChartSkills from "./ChartSkills/ChartSkills"
 import ChartShares from "./ChartShares/ChartShares"
+import ChartDynamic from "./ChartDynamic/ChartDynamic"
 
 function Main() {
 
@@ -12,6 +13,7 @@ function Main() {
             <ChartStaff/>
             <ChartShares/>
             <ChartSkills/>
+            <ChartDynamic/>
 
             <Outlet/>
         </main>
