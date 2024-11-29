@@ -1,5 +1,5 @@
 .searchForm {
-    width: 100%;
+    width: 670px;
     height: min-content;
     display: flex;
     align-items: center;
@@ -12,6 +12,7 @@
     display: flex;
     align-items: center;
     background-color: #FFF;
+    border-radius: 12px;
 }
 
 .searchLoupeBtn {
@@ -44,16 +45,16 @@ input[type=text] {
 }
 
 .searchInput {
-    /*margin-left: 12px;*/
     padding-left: 52px;
-    line-height: 56px;
+    line-height: 47px;
     width: 100%;
     color: var(--text-color-dark);
     border: none;
     border-radius: 12px;
+    font-size: 19px;
 }
 
 .searchInput:focus {
     border: 1px solid var(--text-color-middle);
-    box-shadow: inset 1px 1px 4px var(--background-tertiary);
+    box-shadow: inset 2px 3px 6px var(--background-tertiary);
 }

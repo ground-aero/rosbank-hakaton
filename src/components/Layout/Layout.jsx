@@ -10,7 +10,6 @@ function Layout() {
         <div className={styles.layout}>
             <TopBar/>
             <MenuBar/>
-            <SearchForm/>
             <Main/>
         </div>
     )
