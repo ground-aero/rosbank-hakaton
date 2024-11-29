@@ -29,7 +29,7 @@ function SearchForm() {
     }
 
     return (
-        <form onSubmit={handleSubmitSearch} className={`${styles.searchForm} ${globalStyles.section}`} id="search" name="search">
+        <form onSubmit={handleSubmitSearch} className={`${styles.searchForm}`} id="search" name="search">
             <div className={styles.searchWrap}>
                 <button type="submit" className={`${styles.searchLoupeBtn} ${styles.searchLoupeImg}`}></button>
                 <input
