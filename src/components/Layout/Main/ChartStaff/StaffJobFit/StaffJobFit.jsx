@@ -15,9 +15,11 @@ function StaffJobFit() {
         isTeamId,
         isTeamName,
         setTeamName,
-        setTeamTotal
+        setTeamTotal,
+        selectedPosition,
     } = useContext(TeamContext);
 
+    // список сотрудников isTeamSuitStaff в зависимости от: isTeamId
     const getTeamsIdSuitPosition = useCallback(async () => {
         try {
             if (isTeamId === null) {
@@ -25,21 +27,27 @@ function StaffJobFit() {
                 setTeamSuitStaff(data);
                 setTeamTotal(data?.length);
                 setCurrentView('teamStaff');
-            } else {
+            } else if (isTeamId) {
                 let data = await api.getTeamsIdSuitPosition(isTeamId)
                 setTeamSuitStaff(data);
                 setTeamTotal(data?.length);
                 setCurrentView('teamStaff');
             }
+            // else if (selectedPosition) {
+            //
+            // }
         } catch (err) {
             console.error(err);
         }
     }, [isTeamId, setTeamTotal]);
 
+  // console.log('isTeamSuitStaff:', isTeamSuitStaff)
+
     useEffect(() => {
         getTeamsIdSuitPosition();
     }, [getTeamsIdSuitPosition]);
 
+    // устанавливаем в контекст и в данный график isTeamName
     const getTeamName = useCallback(async () => {
         try {
             if (isTeamId === null) {
@@ -111,11 +119,13 @@ function StaffJobFit() {
     return (
         <table className={globalStyles.table}>
             <tbody>
-            { currentView === 'teamStaff' ? (
-                isTeamSuitStaff?.length === 0 ? (
-                    <tr className={globalStyles.tableRow}>
-                        <td colSpan="2" className={globalStyles.tableColLeft}>В фильтре выберите данные</td>
-                    </tr>
+            { currentView === 'teamStaff'
+                ? (
+                isTeamSuitStaff?.length === 0
+                    ? (
+                        <tr className={globalStyles.tableRow}>
+                            <td colSpan="2" className={globalStyles.tableColLeft}>В фильтре выберите данные</td>
+                        </tr>
                 ) : (
                     isTeamSuitStaff.map((employee, i) => (
                         <tr
@@ -132,15 +142,15 @@ function StaffJobFit() {
                         </tr>
                     ))
                 )
-            ) : (
-                <tr className={globalStyles.tableRow}>
-                    <td className={globalStyles.tableColLeft}>
-                        {`${selectedEmployee.last_name} ${selectedEmployee.first_name}`}
-                        {selectedEmployee.position && ` - ${selectedEmployee.position}`}
-                    </td>
-                    <td className={globalStyles.tableColRight}>{`${'percentage'}%`}</td>
-                </tr>
-            )}
+                ) : (
+                    <tr className={globalStyles.tableRow}>
+                        <td className={globalStyles.tableColLeft}>
+                            {`${selectedEmployee.last_name} ${selectedEmployee.first_name}`}
+                            {selectedEmployee.position && ` - ${selectedEmployee.position}`}
+                        </td>
+                        <td className={globalStyles.tableColRight}>{`${'percentage'}%`}</td>
+                    </tr>
+                )}
             </tbody>
         </table>
     );

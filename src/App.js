@@ -13,6 +13,9 @@ function App() {
   const [isEmployeeId, setEmployeeId] = useState(null)
   const [selectedEmployee, setSelectedEmployee] = useState( {})
   const [isBusFactor, setBusFactor] = useState(0)
+  const [positions, setPositions] = useState([])
+  const [selectedPosition, setSelectedPosition] = useState(null)
+  const [isPositionId, setPositionId] = useState(null)
 
   return (
       <>
@@ -32,7 +35,13 @@ function App() {
           selectedEmployee,
           setSelectedEmployee,
           isBusFactor,
-          setBusFactor
+          setBusFactor,
+          positions,
+          setPositions,
+          isPositionId,
+          setPositionId,
+          selectedPosition,
+          setSelectedPosition,
         }}
         >
           <Routes>

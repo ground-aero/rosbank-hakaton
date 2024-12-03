@@ -5,11 +5,16 @@ import { DB_URL } from "../../../../../utils/constants";
 import ChartDoughnut from '../../../../Charts/ChartDoughnut'
 
 function SharesPositions() {
-    const { isTeamId, selectedEmployee } = useContext(TeamContext);
+    const { isTeamId,
+        selectedEmployee,
+        isPositionName,
+        selectedPosition,
+    } = useContext(TeamContext);
     const [ isFetchingData, setFetchingData] = useState(false)
     const [ isAllPositions, setAllPositions] = useState([])
 
   console.log('isTeamId, selectedEmployee::',isTeamId, Object.keys(selectedEmployee).length)
+    // запрашивает данные по API в зависимости от выбранной: команды / сотрудника/ должности
     const fetchEmployeePositions = useCallback(async () => {
         setFetchingData(true);
 
@@ -31,7 +36,10 @@ function SharesPositions() {
 
                 url = isTeamId
                     ? `${DB_URL}/api/v1/dashboard/employee_positions/?team=${isTeamId}`
-                    : `${DB_URL}/api/v1/dashboard/employee_positions/`;
+                    : selectedPosition?.id
+                        ? `${DB_URL}/api/v1/dashboard/employee_positions/?position=${selectedPosition?.id}`
+                        : `${DB_URL}/api/v1/dashboard/employee_positions/`;
+
 
                 const { data } = await axios.get(url, {
                     headers: { 'Accept': 'application/json' },
@@ -39,13 +47,15 @@ function SharesPositions() {
                 responseData = data;
             }
 
+         console.log("responseData:",responseData)
+
             setAllPositions(responseData);
         } catch (err) {
             console.error(err);
         } finally {
             setFetchingData(false);
         }
-    }, [isTeamId, selectedEmployee]); //selectedEmployee
+    }, [isTeamId, selectedEmployee, selectedPosition]); //selectedEmployee
 
     useEffect(() => {
         fetchEmployeePositions();
@@ -53,7 +63,7 @@ function SharesPositions() {
 
     return (
         <>
-            {isFetchingData ? (
+            { isFetchingData ? (
                 <div>Loading...</div>
             ) : (
                 <ChartDoughnut data={isAllPositions} />

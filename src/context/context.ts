@@ -14,6 +14,11 @@ interface TeamContextType {
     selectedEmployee: null | {},
     isBusFactor: number,
     setBusFactor: Dispatch<SetStateAction<number>>,
+    positions: [],
+    setPositions: Dispatch<SetStateAction<any>>,
+    isPositionId: number | string | null,
+    selectedPosition: null | {},
+    setSelectedPosition: Dispatch<SetStateAction<any>>,
 }
 
 // Создаем контекст с дефолтным значением
@@ -29,5 +34,10 @@ export const TeamContext = React.createContext<TeamContextType>({
     isEmployeeId: null,
     selectedEmployee: {},
     isBusFactor: 0,
-    setBusFactor: () => {}, // Заглушка для setBusFactor
+    setBusFactor: () => {}, // Заглушка для setBusFactor,
+    positions: [],
+    setPositions: () => {},
+    isPositionId: null,
+    selectedPosition: {},
+    setSelectedPosition: () => {},
 });

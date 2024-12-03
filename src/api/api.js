@@ -76,6 +76,21 @@ class Api {
         }
     }
 
+    // data for Filter (Positions)
+    async getPositions() {
+        try {
+            const response = await axios.get(`${DB_URL}/api/v1/positions`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            });
+            return response.data;
+        } catch (error) {
+            throw new Error(`Ошибка: ${error.response?.status} ${error.response?.statusText}`);
+        }
+    }
+
     // data for Shares Chart (upper right)
     async getEmployeePositions(teamId) {
         try {
