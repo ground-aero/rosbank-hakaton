@@ -1,79 +1,159 @@
-import {useState, useEffect, useContext} from 'react'
-import axios from 'axios'
-import './StaffJobFit.css'
-import {TeamContext} from "../../../../../context/context";
+import { useState, useEffect, useContext, useCallback } from 'react'
+import api from '../../../../../api/api'
+import globalStyles from '../../../../../globals.module.css'
+import { TeamContext } from "../../../../../context/context"
 
 function StaffJobFit() {
-    const [isFetchingData, setFetchingData] = useState('false')
-    const [isAllStaff, setAllStaff] = useState([])
-    const {isEmployeeId, setEmployeeId, isTeamId, isTeamTotal, setTeamTotal} = useContext(TeamContext)
+    const [isTeamSuitStaff, setTeamSuitStaff] = useState([]);
+    const [currentView, setCurrentView] = useState('teamStaff');
+    const {
+        employees,
+        isEmployeeId,
+        setEmployeeId,
+        selectedEmployee,
+        setSelectedEmployee,
+        isTeamId,
+        isTeamName,
+        setTeamName,
+        setTeamTotal,
+        selectedPosition,
+    } = useContext(TeamContext);
+
+    // список сотрудников isTeamSuitStaff в зависимости от: isTeamId
+    const getTeamsIdSuitPosition = useCallback(async () => {
+        try {
+            if (isTeamId === null) {
+                let data = await api.getTeamsAllSuitPosition()
+                setTeamSuitStaff(data);
+                setTeamTotal(data?.length);
+                setCurrentView('teamStaff');
+            } else if (isTeamId) {
+                let data = await api.getTeamsIdSuitPosition(isTeamId)
+                setTeamSuitStaff(data);
+                setTeamTotal(data?.length);
+                setCurrentView('teamStaff');
+            }
+            // else if (selectedPosition) {
+            //
+            // }
+        } catch (err) {
+            console.error(err);
+        }
+    }, [isTeamId, setTeamTotal]);
+
+  // console.log('isTeamSuitStaff:', isTeamSuitStaff)
 
     useEffect(() => {
-        fetchAllStaff()
-    }, [isTeamId])
-    const fetchAllStaff = async () => {
-        setFetchingData(true)
-        // const db_url = 'https://jsonplaceholder.typicode.com';
-        const db_url = `http://127.0.0.1:8000/api/v1/dashboard/suitability_position/?team=${isTeamId}`;
+        getTeamsIdSuitPosition();
+    }, [getTeamsIdSuitPosition]);
+
+    // устанавливаем в контекст и в данный график isTeamName
+    const getTeamName = useCallback(async () => {
         try {
-            let { data } = await axios.get(`${db_url}`, {
-                headers: {
-                    'Accept': 'application/json',
-                },
-            });
-            console.log(data, data.length)
-            setAllStaff(data)
-            setTeamTotal(data.length)
-            return data;
-
+            if (isTeamId === null) {
+                setTeamName('');
+            } else {
+                let data = await api.getTeams(isTeamId)
+                const teamName = data.find((team) => team.id === isTeamId)
+                setTeamName(teamName.name);
+            }
         } catch (err) {
-            console.error(err)
-        } finally {
-            setFetchingData(false)
+            console.error(err);
         }
-    }
+    }, [isTeamId, setTeamName]);
 
-    const handleRowClick = (clickedEmployeeId) => {
-        setEmployeeId(clickedEmployeeId === isEmployeeId ? null : clickedEmployeeId);
-        // console.log(clickedEmployeeId)
-    }
+    useEffect(() => {
+        getTeamName();
+    }, [getTeamName]);
+
+    const handleRowClick = useCallback((clickedEmployeeId, clickedEmployeeName) => {
+        console.log("Clicked Employee ID, clickedEmployeeName:", clickedEmployeeId,clickedEmployeeName);
+        console.log("Current employees array:", employees);
+
+        if (Number(clickedEmployeeId) === Number(isEmployeeId)) {
+            setEmployeeId(null);
+            setSelectedEmployee({});
+            setCurrentView('teamStaff');
+        } else {
+            setEmployeeId(clickedEmployeeId);
+
+            // Находим сотрудника в массиве employees
+            const selectedEmployeeLocal = employees.find(employee => {
+                return Number(employee.id) === Number(clickedEmployeeId);
+            });
+
+            console.log("Found employee:", selectedEmployeeLocal);
+
+            // Разбиваем имя на ФИО
+            const [lastName, firstName] = clickedEmployeeName.split(' ');
+
+            // Создаем объект с обогащенными полями из объекта employees
+            const employeeEnrichedObject = {
+                last_name: lastName,
+                first_name: firstName,
+                id: Number(clickedEmployeeId),
+                position: selectedEmployeeLocal?.position || '',
+                grade: selectedEmployeeLocal?.grade || '',
+                team: selectedEmployeeLocal?.team || ''
+            };
+
+          console.log("Created employee object:", employeeEnrichedObject);
+
+            setSelectedEmployee(employeeEnrichedObject);
+            setCurrentView('teamStaff');
+        }
+    }, [isEmployeeId, setEmployeeId, setSelectedEmployee, employees]);
+
+    useEffect(() => {
+        if (selectedEmployee) {
+            setCurrentView('teamStaff');
+        }
+    }, [selectedEmployee]);
+
+    useEffect(() => {
+        if (isTeamName) {
+            setCurrentView('teamStaff');
+        }
+    }, [isTeamName]);
 
     return (
-        <>
-            <p className='table__subtitle'>Сотрудник: {isEmployeeId || '_'}_ • Уровень владения навыками</p>
-
-            <table className='table'>
-                <thead className='table__headers'>
-                    <tr className='table__row'>
-                        <th className='table__header table__header_left'>Сотрудник</th>
-                        <th className='table__header table__header_right'>Доля навыков с удовлетворительной оценкой</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                {isAllStaff.length === 0 ? (
-                    <tr className='table__row'>
-                        <td colSpan="2" className='table__col_left'>В меню выберите Команду</td>
-                    </tr>
+        <table className={globalStyles.table}>
+            <tbody>
+            { currentView === 'teamStaff'
+                ? (
+                isTeamSuitStaff?.length === 0
+                    ? (
+                        <tr className={globalStyles.tableRow}>
+                            <td colSpan="2" className={globalStyles.tableColLeft}>В фильтре выберите данные</td>
+                        </tr>
                 ) : (
-                    isAllStaff.map((employee, i) => (
-                            <tr key={i}
-                                onClick={() => handleRowClick(employee.employee_id)}
-                                className={`table__row ${isEmployeeId === employee.employee_id ? 'selected' : ''}`}
-                                style={{cursor: 'pointer'}}
-                            >
-                                <td className='table__col_left'>{employee.employee}</td>
-                                <td className='table__col_right'>{`${employee.percentage}%`}</td>
-                            </tr>
-                        ))
-                    )}
-                </tbody>
-            </table>
-
-            {/*{isTeamId && <SkillsLevel employeeId={isSelectedEmployeeId} isTeamId={isTeamId} />}*/}
-        </>
-    )
+                    isTeamSuitStaff.map((employee, i) => (
+                        <tr
+                            key={i}
+                            onClick={() => handleRowClick(
+                                employee.employee_id,
+                                employee.employee
+                            )}
+                            className={`${globalStyles.tableRow} ${isEmployeeId === employee.employee_id ? globalStyles.tableRowSelected : ''}`}
+                            style={{ cursor: 'pointer' }}
+                        >
+                            <td className={globalStyles.tableColLeft}>{employee.employee}</td>
+                            <td className={globalStyles.tableColRight}>{`${employee.percentage}%`}</td>
+                        </tr>
+                    ))
+                )
+                ) : (
+                    <tr className={globalStyles.tableRow}>
+                        <td className={globalStyles.tableColLeft}>
+                            {`${selectedEmployee.last_name} ${selectedEmployee.first_name}`}
+                            {selectedEmployee.position && ` - ${selectedEmployee.position}`}
+                        </td>
+                        <td className={globalStyles.tableColRight}>{`${'percentage'}%`}</td>
+                    </tr>
+                )}
+            </tbody>
+        </table>
+    );
 }
 
-export default StaffJobFit
+export default StaffJobFit;

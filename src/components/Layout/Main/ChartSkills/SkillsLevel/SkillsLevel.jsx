@@ -1,29 +1,26 @@
-import {useState, useEffect, useContext} from 'react'
+import { useState, useEffect, useContext, useCallback } from 'react'
 import axios from 'axios'
-import './SkillsLevel.css'
 import ChartLeftBars from '../../../../Charts/ChartLeftBars'
 import { TeamContext } from '../../../../../context/context'
+import { DB_URL } from "../../../../../utils/constants";
 
 function SkillsLevel() {
     const { isEmployeeId, isTeamId } = useContext(TeamContext);
     const [isFetchingData, setFetchingData] = useState(false)
     const [isAllSkills, setAllSkills] = useState([])
 
-    console.log('isEmployeeId, isTeamId:', isEmployeeId, isTeamId)
-
-    useEffect(() => {
-        if (isTeamId) {
-            fetchSkills();
-        }
-    }, [isEmployeeId, isTeamId]);
-    const fetchSkills = async () => {
-        if (!isTeamId) return;
+    const fetchSkills = useCallback(async () => {
+        // if (!isTeamId) return;
 
         setFetchingData(true)
-        // const db_url = 'https://jsonplaceholder.typicode.com/';
+        // let url = isEmployeeId
+        //     ? `${DB_URL}/api/v1/dashboard/suitability_position/${isEmployeeId}/skills`
+        //     : `${DB_URL}/api/v1/dashboard/skill_level/?team=${isTeamId}`;
         let url = isEmployeeId
-            ? `http://127.0.0.1:8000/api/v1/dashboard/suitability_position/${isEmployeeId}/skills`
-            : `http://127.0.0.1:8000/api/v1/dashboard/skill_level/?team=${isTeamId}`;
+            ? `${DB_URL}/api/v1/dashboard/suitability_position/${isEmployeeId}/skills`
+            : isTeamId === null
+              ? `${DB_URL}/api/v1/dashboard/skill_level`
+                    : `${DB_URL}/api/v1/dashboard/skill_level/?team=${isTeamId}`;
 
         try {
             let { data } = await axios.get(`${url}`, {
@@ -31,31 +28,30 @@ function SkillsLevel() {
                     'Accept': 'application/json',
                 },
             });
-            console.log(data)
+    console.log('setAllSkills data:',data)
             setAllSkills(data)
             return data;
-
         } catch (err) {
             console.error(err)
         } finally {
             setFetchingData(false)
         }
-    }
+    }, [isEmployeeId, isTeamId]);
+
+    useEffect(() => {
+        // if (isTeamId) {
+        //     fetchSkills();
+        // }
+        fetchSkills();
+    }, [isTeamId, fetchSkills]);
 
     return (
         <div>
-            <p className='chart__subtitle'>
-                {isEmployeeId ? 'ШКАЛЫ УРОВНЕЙ НАВЫКОВ СОТРУДНИКА' : 'СРЕДНИЕ УРОВНИ НАВЫКОВ КОМАНДЫ'}
-            </p>
-
-            {isFetchingData ? (
+            { isFetchingData ? (
                 <p>Loading...</p>
             ) : (
                 <ChartLeftBars key={isEmployeeId || 'team'} data={isAllSkills}/>
             )}
-
-            {/* TEST FETCH BTN */}
-            {/*<button onClick={fetchSkills} className='TEST-BTN'>Обновить данные</button>*/}
         </div>
     )
 }

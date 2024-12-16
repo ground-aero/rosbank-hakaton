@@ -1,0 +1,32 @@
+.popup {
+    display: none;
+}
+
+.popup_opened {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    z-index: 2;
+    top: 42px;
+    right: 5px;
+    padding: 44px 12px;
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1px solid var(--background-tertiary);
+    opacity: .7;
+}
+
+.btnClose {
+    width: 23px;
+    height: 23px;
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.popup_type_mainMenu {
+
+}

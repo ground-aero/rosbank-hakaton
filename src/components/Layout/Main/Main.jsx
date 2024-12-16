@@ -1,35 +1,21 @@
-import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import './Main.css'
+import globalStyles from '../../../globals.module.css'
+import styles from './Main.module.css'
 import ChartStaff from "./ChartStaff/ChartStaff"
 import ChartSkills from "./ChartSkills/ChartSkills"
+import ChartShares from "./ChartShares/ChartShares"
+import ChartDynamic from "./ChartDynamic/ChartDynamic"
 
-function Main({ type }) {
-    const [activeTab, setActiveTab] = useState('charts')
+function Main() {
 
     return (
-        <main className="main">
-
+        <main className={`${styles.main} ${globalStyles.section}`}>
             <ChartStaff/>
-
+            <ChartShares/>
             <ChartSkills/>
-            {/*<div className="tabs">*/}
-            {/*    <button className={`tab ${activeTab==='charts' ? 'active' : ''}`}*/}
-            {/*            onClick={() => setActiveTab('charts')}>*/}
-            {/*        Чарты*/}
-            {/*    </button>*/}
-            {/*    <button className={`tab ${activeTab==='docs' ? 'active' : ''}`}*/}
-            {/*            onClick={() => setActiveTab('docs')}>*/}
-            {/*        Документация*/}
-            {/*    </button>*/}
-            {/*</div>*/}
-
-            {/*<div className="tab-content">*/}
-            {/*    {activeTab === 'charts' ? <LayoutCharts/> : <LayoutDocs/>}*/}
-            {/*</div>*/}
+            <ChartDynamic/>
 
             <Outlet/>
-
         </main>
     );
 }

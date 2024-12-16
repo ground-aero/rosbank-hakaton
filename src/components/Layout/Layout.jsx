@@ -1,16 +1,15 @@
 import React from 'react'
-import Sidebar from "./Sidebar/Sidebar"
-import Main from "./Main/Main"
 import TopBar from "./TopBar/TopBar"
+import Main from "./Main/Main"
+import MenuBar from "./MenuBar/MenuBar"
 import SearchForm from "./SearchForm/SearchForm"
-import './Layout.css'
+import styles from './Layout.module.css'
 
 function Layout() {
     return (
-        <div className="layout">
-            <Sidebar/>
+        <div className={styles.layout}>
             <TopBar/>
-            <SearchForm/>
+            <MenuBar/>
             <Main/>
         </div>
     )

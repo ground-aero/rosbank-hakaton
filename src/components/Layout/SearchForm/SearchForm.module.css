@@ -1,10 +1,9 @@
 .searchForm {
-    width: 100%;
+    width: 670px;
     height: min-content;
     display: flex;
     align-items: center;
     border-radius: 12px;
-    padding: 0 40px 0 62px;
 }
 
 .searchWrap {
@@ -13,6 +12,7 @@
     display: flex;
     align-items: center;
     background-color: #FFF;
+    border-radius: 12px;
 }
 
 .searchLoupeBtn {
@@ -38,22 +38,23 @@
 }
 
 input[type=text] {
-    border: 1px solid var(--text-color-light);
+    border: 1px solid var(--text-color-middle);
     -webkit-transition: 0.5s;
     transition: 0.5s;
     outline: none;
 }
 
 .searchInput {
-    /*margin-left: 12px;*/
     padding-left: 52px;
-    line-height: 56px;
+    line-height: 47px;
     width: 100%;
     color: var(--text-color-dark);
     border: none;
     border-radius: 12px;
+    font-size: 19px;
 }
 
 .searchInput:focus {
     border: 1px solid var(--text-color-middle);
+    box-shadow: inset 2px 3px 6px var(--background-tertiary);
 }

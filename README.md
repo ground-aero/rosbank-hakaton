@@ -74,6 +74,9 @@ Bus-factor:
 - /api/v1/dashboard/bus_factor - показатель Bus-factor
 - /api/v1/dashboard/bus_factor/?team=5 -
   всплывающий тултип с названием бас-фактора, привязанного к конкретной команде
+- /api/v1/dashboard/bus_factor - показатель Bus-factor
+- /api/v1/dashboard/bus_factor/?team=5 -
+  всплывающий тултип с названием бас-фактора, привязанного к конкретной команде
 
 - Массив объектов с названиями команд:  
   /api/v1/teams/
