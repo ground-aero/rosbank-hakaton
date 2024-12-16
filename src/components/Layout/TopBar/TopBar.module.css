@@ -1,16 +1,13 @@
 .topBar {
-    width: 100%;
-    height: 100px;
     display: flex;
+    position: relative;
+    height: 100px;
     justify-content: space-between;
     align-items: center;
     background-color: var(--background-quaternary);
-    /*position: absolute;*/
-    /*top: 0;*/
-    /*left: 0;*/
 }
 
-.topBarInnerBar {
+.topBarInner {
     display: flex;
     justify-content: space-between;
     align-content: center;
@@ -19,26 +16,31 @@
     height: 48px;
 }
 
-.innerHalf {
-    height: 100%;
+.innerWrap {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
 }
 
-.innerHalf:nth-child(2) {
-    justify-content: flex-end;
+.innerRight {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.innerRight:nth-child(2) {
+    margin-right: 0;
 }
 
 .btnWrap {
     position: relative;
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: transparent;
     transition: background-color 0.35s ease;
-    margin-bottom: 8px;
     border-radius: 12px;
     border: none;
 }

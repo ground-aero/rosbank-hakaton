@@ -42,8 +42,8 @@ function Filter() {
             />
             <PopupMainMenu
                 name='mainMenu'
-                onSubmit={ handleSubmitForm }
                 onOpen={isMainMenuPopupOpen}
+                onSubmit={ handleSubmitForm }
                 onClose={closeAllPopups}
                 textBtn={'Применить фильтры'}
             />

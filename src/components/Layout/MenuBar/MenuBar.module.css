@@ -60,9 +60,10 @@
 .innerNum {
     font-weight: 600;
     height: 22px;
+    font-size: 19px;
 }
 
 .innerText {
-    font-size: 10px;
     height: 16px;
+    font-size: 14px;
 }
