@@ -49,6 +49,7 @@ function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
                 // В контекст устанавливаем список всех сотрудников
                 setEmployees(data);
           console.log("setEmployees data:", data)
+                localStorage.setItem('employees', JSON.stringify(data))
             } catch (err) {
                 console.error('Error fetching teams',err)
             }

@@ -17,6 +17,7 @@ function StaffJobFit() {
         setTeamName,
         setTeamTotal,
         selectedPosition,
+        setSelectedPosition,
     } = useContext(TeamContext);
 
     // список сотрудников isTeamSuitStaff в зависимости от: isTeamId
@@ -27,6 +28,7 @@ function StaffJobFit() {
                 setTeamSuitStaff(data);
                 setTeamTotal(data?.length);
                 setCurrentView('teamStaff');
+          // console.log(data)
             } else if (isTeamId) {
                 let data = await api.getTeamsIdSuitPosition(isTeamId)
                 setTeamSuitStaff(data);
@@ -72,7 +74,7 @@ function StaffJobFit() {
 
         if (Number(clickedEmployeeId) === Number(isEmployeeId)) {
             setEmployeeId(null);
-            setSelectedEmployee({});
+            setSelectedEmployee(null);
             setCurrentView('teamStaff');
         } else {
             setEmployeeId(clickedEmployeeId);
@@ -100,6 +102,7 @@ function StaffJobFit() {
           console.log("Created employee object:", employeeEnrichedObject);
 
             setSelectedEmployee(employeeEnrichedObject);
+            setSelectedPosition(null)
             setCurrentView('teamStaff');
         }
     }, [isEmployeeId, setEmployeeId, setSelectedEmployee, employees]);
