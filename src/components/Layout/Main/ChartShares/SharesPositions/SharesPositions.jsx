@@ -13,7 +13,7 @@ function SharesPositions() {
     const [ isFetchingData, setFetchingData] = useState(false)
     const [ isAllPositions, setAllPositions] = useState([])
 
-  console.log('isTeamId, selectedEmployee::',isTeamId, Object.keys(selectedEmployee).length)
+  // console.log('isTeamId, selectedEmployee::',isTeamId, Object.keys(selectedEmployee).length)
     // запрашивает данные по API в зависимости от выбранной: команды / сотрудника/ должности
     const fetchEmployeePositions = useCallback(async () => {
         setFetchingData(true);
@@ -47,7 +47,7 @@ function SharesPositions() {
                 responseData = data;
             }
 
-         console.log("responseData:",responseData)
+         // console.log("responseData:",responseData)
 
             setAllPositions(responseData);
         } catch (err) {

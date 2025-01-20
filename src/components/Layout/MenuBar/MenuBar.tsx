@@ -31,12 +31,12 @@ console.log(data)
             {/* 2 small data windows */}
             <section className={styles.wrapData}>
                 <div className={styles.innerData}>
-                    <div className={styles.innerNum}>{isTeamTotal}</div>
+                    <div className={styles.innerNum}>{ isTeamTotal }</div>
                     <div className={styles.innerText}>Всего в команде</div>
                 </div>
 
                 <div className={`${styles.innerData} ${styles.innerDataBusFactor}`} title={`Навык: ${isSkillName}`}>
-                    <div className={styles.innerNum}>{isBusFactor}</div>
+                    <div className={styles.innerNum}>{ isBusFactor }</div>
                     <div className={styles.innerText}>Bus-фактор</div>
                 </div>
             </section>

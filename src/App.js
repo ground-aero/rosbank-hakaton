@@ -11,7 +11,7 @@ function App() {
   const [isTeamTotal, setTeamTotal] = useState(0)
   const [employees, setEmployees] = useState([])
   const [isEmployeeId, setEmployeeId] = useState(null)
-  const [selectedEmployee, setSelectedEmployee] = useState( {})
+  const [selectedEmployee, setSelectedEmployee] = useState( null || {})
   const [isBusFactor, setBusFactor] = useState(0)
   const [positions, setPositions] = useState([])
   const [selectedPosition, setSelectedPosition] = useState(null)
