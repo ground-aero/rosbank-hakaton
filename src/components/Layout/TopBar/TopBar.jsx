@@ -1,11 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import globalStyles from '../../../globals.module.css'
 import styles from './TopBar.module.css'
-import BtnEmpty from '../../../images/btn_empty.png'
-import BtnBell from '../../../images/btn_bell.svg'
-import BtnNut from '../../../images/btn_nut.svg'
-import Men from '../../../images/btn_users.png'
-import UserImg from '../../../images/user_img.png'
+import { BtnEmpty, BtnBell, BtnNut, UserImg, BtnMen } from '../../../icons'
 import { useState } from "react"
 import SearchForm from "../../../components/Layout/SearchForm/SearchForm"
 
@@ -35,7 +31,7 @@ function TopBar() {
                             </li>
                         </ul>
                         <ul className={styles.innerRight}>
-                            <img src={UserImg} className={`${styles.innerIconBg} ${styles.innerUserImg}`} alt="user"/>
+                            <img src={ UserImg } className={`${styles.innerIconBg} ${styles.innerUserImg}`} alt="user"/>
                         </ul>
                     </div>
 

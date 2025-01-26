@@ -1,10 +1,10 @@
 import styles from './Filter.module.css'
 import PopupMainMenu from "../../../../components/Popup/PopupMainMenu/PopupMainMenu"
 import { useState, useContext } from "react"
-import { TeamContext } from '../../../../context/context'
+import { AppContext } from '../../../../context/context'
 
 function Filter() {
-    const { isTeamId, isTeamName, isEmployeeId, selectedEmployee } = useContext(TeamContext)
+    const { isTeamId, isTeamName, isEmployeeId, selectedEmployee } = useContext(AppContext)
 
     const [isPopupOpen, setPopupOpen] = useState(false)
     const [isMainMenuPopupOpen, setMainMenuPopupOpen] = useState(false)

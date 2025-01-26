@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext, useCallback } from 'react'
 import axios from 'axios'
-import { TeamContext } from '../../../../../context/context'
+import { AppContext } from '../../../../../context/context'
 import { DB_URL } from "../../../../../utils/constants";
 import ChartDoughnut from '../../../../Charts/ChartDoughnut'
 
@@ -9,7 +9,7 @@ function SharesPositions() {
         selectedEmployee,
         isPositionName,
         selectedPosition,
-    } = useContext(TeamContext);
+    } = useContext(AppContext);
     const [ isFetchingData, setFetchingData] = useState(false)
     const [ isAllPositions, setAllPositions] = useState([])
 

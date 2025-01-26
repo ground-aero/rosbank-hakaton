@@ -2,10 +2,10 @@ import { useContext, useState } from 'react'
 import globalStyles from '../../../../globals.module.css'
 import styles from './ChartDynamic.module.css'
 import SkillsDynamic from './SkillsDynamic/SkillsDynamic';
-import { TeamContext } from '../../../../context/context'
+import { AppContext } from '../../../../context/context'
 
 function ChartDynamic() {
-    const { teams, isTeamName, selectedEmployee} = useContext(TeamContext);
+    const { teams, isTeamName, selectedEmployee} = useContext(AppContext);
     const [ activeTab, setActiveTab ] = useState('skillsDynamic');
 
  // console.log('isTeamName, teams', "selectedEmployee:", isTeamName, teams, selectedEmployee)

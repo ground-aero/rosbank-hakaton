@@ -2,13 +2,13 @@ import { useContext, useEffect, useState, useCallback } from "react"
 import api from '../../../api/api'
 import globalStyles from '../../../globals.module.css'
 import styles from './MenuBar.module.css'
-import { TeamContext } from "../../../context/context"
+import { AppContext } from "../../../context/context"
 import Filter from './Filter/Filter'
 import { type TBusFactor } from '../../../entities/bus-factor/types'
 import PopupMainMenu from '../../Popup/PopupMainMenu/PopupMainMenu'
 
 function MenuBar() {
-    const { isTeamTotal, isTeamId, isBusFactor, setBusFactor } = useContext(TeamContext);
+    const { isTeamTotal, isTeamId, isBusFactor, setBusFactor } = useContext(AppContext);
     const [isSkillName, setSkillName] = useState<string>("");
 
     const getBusFactor = useCallback(async () => {
