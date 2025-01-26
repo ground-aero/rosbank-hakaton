@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 
 
-interface TeamContextType {
+interface ContextType {
     teams: [],
     setTeams: Dispatch<SetStateAction<any>>,
     isTeamId: number | string | null,
@@ -12,6 +12,8 @@ interface TeamContextType {
     setEmployees: Dispatch<SetStateAction<any>>,
     isEmployeeId: number | null,
     selectedEmployee: null | {},
+    employeesByPosition: [],
+    setEmployeesByPosition: Dispatch<SetStateAction<any>>,
     isBusFactor: number,
     setBusFactor: Dispatch<SetStateAction<number>>,
     positions: [],
@@ -22,7 +24,7 @@ interface TeamContextType {
 }
 
 // Создаем контекст с дефолтным значением
-export const TeamContext = React.createContext<TeamContextType>({
+export const AppContext = React.createContext<ContextType>({
     teams: [],
     setTeams: () => {},
     isTeamId: null,
@@ -33,6 +35,8 @@ export const TeamContext = React.createContext<TeamContextType>({
     setEmployees: () => {},
     isEmployeeId: null,
     selectedEmployee: {},
+    employeesByPosition: [],
+    setEmployeesByPosition: () => {},
     isBusFactor: 0,
     setBusFactor: () => {}, // Заглушка для setBusFactor,
     positions: [],

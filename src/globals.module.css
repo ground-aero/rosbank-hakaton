@@ -152,13 +152,13 @@ a {
   padding-top: 24px;
   width: 100%;
   border-collapse: collapse;
-  border: 1px solid var(--text-color-middle);
+  /*border: 1px solid var(--text-color-light);*/
 }
 
 .tableHeader {
   font-weight: 600;
   background-color: var(--background-secondary);
-  border: 1px solid var(--text-color-middle);
+  border: 1px solid var(--text-color-light);
 }
 
 .tableHeaders {
@@ -178,8 +178,8 @@ a {
 
 .tableColLeft {
   width: 213px;
-  border-right: 1px solid var(--text-color-middle);
-  border-bottom: 1px solid var(--text-color-middle);
+  border-right: 1px solid var(--text-color-light);
+  border-bottom: 1px solid var(--text-color-light);
 }
 
 .tableHeader,
@@ -190,12 +190,24 @@ a {
 }
 
 .tableRow {
-  border: 1px solid var(--text-color-middle);
+  border: 1px solid var(--text-color-light);
 }
 
 .tableRowSelected {
-  border: 2px solid var(--text-color-middle);
+  border: 2px solid var(--text-color-light);
   background-color: var(--background-primary);
+}
+
+.tableNoDataBox {
+  height: 150px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.noDataImg {
+  width: 70px;
 }
 
 .scrollableContent {

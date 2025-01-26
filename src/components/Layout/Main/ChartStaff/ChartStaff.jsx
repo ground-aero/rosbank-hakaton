@@ -3,10 +3,10 @@ import globalStyles from '../../../../globals.module.css'
 import styles from './ChartStaff.module.css';
 import StaffJobFit from './StaffJobFit/StaffJobFit';
 import StaffSkilledNum from './StaffSkilledNum/StaffSkilledNum';
-import { TeamContext } from '../../../../context/context'
+import { AppContext } from '../../../../context/context'
 
 function ChartStaff() {
-    const { teams, isTeamName, selectedEmployee, selectedPosition} = useContext(TeamContext);
+    const { teams, isTeamName, selectedEmployee, selectedPosition} = useContext(AppContext);
     const [ activeTab, setActiveTab ] = useState('staffJobFit');
 
  // console.log('isTeamName, teams', "selectedEmployee:", isTeamName, teams, selectedEmployee)

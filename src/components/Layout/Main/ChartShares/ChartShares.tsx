@@ -1,7 +1,7 @@
 import {useContext, useState} from 'react'
 import globalStyles from '../../../../globals.module.css'
 import styles from './ChartShares.module.css'
-import { TeamContext } from '../../../../context/context'
+import { AppContext } from '../../../../context/context'
 import SharesPositions from "./SharesPositions/SharesPositions"
 
 function ChartShares() {

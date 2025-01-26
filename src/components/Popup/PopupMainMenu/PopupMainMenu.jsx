@@ -2,7 +2,7 @@ import { useState } from 'react'
 import PopupWithForm from '../PopupWithForm'
 import styles from './PopupMainMenu.module.css'
 import { useContext, useEffect } from "react"
-import { TeamContext } from "../../../context/context"
+import { AppContext } from "../../../context/context"
 import api from "../../../api/api"
 
 function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
@@ -19,13 +19,14 @@ function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
         setEmployeeId,
         selectedEmployee,
         setSelectedEmployee,
+        setEmployeesByPosition,
         positions,
         setPositions,
         isPositionId,
         setPositionId,
         selectedPosition,
         setSelectedPosition,
-    } = useContext(TeamContext);
+    } = useContext(AppContext);
 
     // Получаем список Команд при монтировании компонента
     useEffect(() => {
@@ -57,7 +58,7 @@ function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
         fetchEmployees()
     },[setEmployees])
 
-    // Получаем список Должностей при монтировании компонента
+    // Получаем список Должностей при монтировании компонента, сохраняем в контекст, и при выборе
     useEffect(() => {
         const fetchPositions = async () => {
             try {
@@ -72,18 +73,18 @@ function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
     },[setPositions])
   console.log(positions)
 
-    // Обработчик изменения выбора команды через select
+    // Обработчик изменения выбора Команды через select
     const handleTeamChange = (teamId) => {
 
         setEmployeeId(null);
         setSelectedEmployee({});
         setSelectedPosition(null)
 
-        const numericTeamId = Number(teamId) || null
         // В контекст устанавливаем id выбранной команды (teamId), или  null если все команды
+        const numericTeamId = Number(teamId) || null
         setTeamId(numericTeamId || null)
 
-        // В контекст устанавливаем имя выбранной команды
+        // В контекст устанавливаем имя выбранной Команды
         const selectedTeam = teams.find(team => team.id === numericTeamId)
 
         if (selectedTeam) {
@@ -114,29 +115,42 @@ function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
     }
     console.log("selectedEmployee:",selectedEmployee)
 
-    // Обработчик изменения выбора должности и обновляет контекст
+    // Обработчик выбора должности, и обновляет контексты: selectedPosition, employees
     const handlePositionChange = (positionId) => {
         const numericPositionId = Number(positionId) || null
 
         // В контекст устанавливаем id выбранной должности, или  null если все должности
         setPositionId(numericPositionId || null)
 
-        // В контекст устанавливаем имя выбранной команды
+        // Сбрасываем ранее выбранного сотрудника //Show all employees when "All Teams" is selected??
+        setEmployeeId(null);
+        setSelectedEmployee({});
+
+        // Выбираем должность
         const selectedPosition = positions.find(position => position.id === numericPositionId)
 
+        // Устанавливаем Должность в контекст, и ее имя (?)
         if (selectedPosition) {
+
+            // сбрасываем конкретную Команду
+            setTeamId(null)
+
             setPositionName(selectedPosition.name || '')
             setSelectedPosition(selectedPosition)
-
-            setTeamId(null)
         } else if (selectedPosition === undefined) {
             setSelectedPosition(null);
         }
+     console.log('selectedPosition:',selectedPosition)
 
-        console.log('selectedPosition:',selectedPosition)
-        // Show all employees when "All Teams" is selected??
-        setEmployeeId(null);
-        setSelectedEmployee({});
+
+        // СОРТИРУЕМ СПИСОК СОТРУДНИКОВ, ПО ДОЛЖНОСТИ (НЕ ПО КОМАНДЕ)
+        // Инициализирую контекст для employeesByPosition
+        const sortedEmployeesByPosition = employees.filter(employee => employee.position === selectedPosition.name)
+        // сохраняем в контекст _employees
+        // МОЖЕТ ЗДЕСЬ ОБОГАТИТЬ ПОЛЯ _employee.percentage
+        setEmployeesByPosition(sortedEmployeesByPosition) // !!! ТОГДА ОБРЕЗАЕТСЯ СПИСОК СОТРУДНИКИ В СЕЛЕКТЕ
+
+      console.log(sortedEmployeesByPosition)
     }
 
     // console.log(onOpen)
@@ -193,7 +207,7 @@ function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
                     <option value="allPositions" className={styles.optionDefault}>--Должности--</option>
                     { positions.map((position) => (
                         <option key={position.id} value={position.id} className={styles.option}>
-                            {position.name}
+                            { position.name }
                         </option>
                     ))}
                 </select>

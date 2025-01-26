@@ -9,6 +9,8 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
+import globalStyles from "../../globals.module.css";
+import {NoData} from "../../icons";
 
 ChartJS.register(
     CategoryScale,
@@ -21,7 +23,9 @@ ChartJS.register(
 
 const ChartLeftBars = ({ data }) => {
     if (!data || data.length === 0) {
-        return <div>No data available</div>;
+        return <div className={globalStyles.tableNoDataBox}>
+            <img src={NoData} className={globalStyles.noDataImg} alt="no data"/>
+        </div>
     }
 
     const options = {

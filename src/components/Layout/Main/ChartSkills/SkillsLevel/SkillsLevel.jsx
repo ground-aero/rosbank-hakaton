@@ -1,11 +1,11 @@
 import { useState, useEffect, useContext, useCallback } from 'react'
 import axios from 'axios'
 import ChartLeftBars from '../../../../Charts/ChartLeftBars'
-import { TeamContext } from '../../../../../context/context'
+import { AppContext } from '../../../../../context/context'
 import { DB_URL } from "../../../../../utils/constants";
 
 function SkillsLevel() {
-    const { isEmployeeId, isTeamId } = useContext(TeamContext);
+    const { isEmployeeId, isTeamId } = useContext(AppContext);
     const [isFetchingData, setFetchingData] = useState(false)
     const [isAllSkills, setAllSkills] = useState([])
 
