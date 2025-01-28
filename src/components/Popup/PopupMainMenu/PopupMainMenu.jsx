@@ -47,9 +47,7 @@ function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
             try {
                 const data = await api.getEmployees();
 
-                // В контекст устанавливаем список всех сотрудников
-                setEmployees(data);
-          console.log("setEmployees data:", data)
+                setEmployees(data); // В контекст устанавливаем список всех сотрудников
                 localStorage.setItem('employees', JSON.stringify(data))
             } catch (err) {
                 console.error('Error fetching teams',err)
@@ -64,14 +62,12 @@ function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
             try {
                 const data = await api.getPositions();
                 setPositions(data);
-          console.log("Positions data", data)
             } catch (err) {
                 console.error('Error fetching teams',err)
             }
         }
         fetchPositions()
     },[setPositions])
-  console.log(positions)
 
     // Обработчик изменения выбора Команды через select
     const handleTeamChange = (teamId) => {
@@ -90,11 +86,8 @@ function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
         if (selectedTeam) {
             setTeamName(selectedTeam.name || '')
         }
-
-     console.log('teamId:',teamId)
     }
-
-   console.log("isTeamId, isTeamName", isTeamId, isTeamName)
+   // console.log("isTeamId, isTeamName", isTeamId, isTeamName)
 
     // Обработчик изменения выбора сотрудника через select
     const handleEmployeeChange = (employeeId) => {
@@ -103,57 +96,50 @@ function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
         // В контекст устанавливаем id выбранного сотрудника
         setEmployeeId(numericEmployeeId)
         setPositionId(null)
+        setSelectedPosition(null)
 
         // В контекст устанавливаем имя выбранного сотрудника
         const selectedEmployeeLocal = employees.find(employee => Number(employee.id) === numericEmployeeId)
-
-         console.log('selectedEmployeeLocal, isTeamId::',selectedEmployeeLocal, isTeamId)
 
         if (selectedEmployeeLocal?.last_name) {
             setSelectedEmployee(selectedEmployeeLocal)
         }
     }
-    console.log("selectedEmployee:",selectedEmployee)
 
     // Обработчик выбора должности, и обновляет контексты: selectedPosition, employees
     const handlePositionChange = (positionId) => {
-        const numericPositionId = Number(positionId) || null
+      // Сбрасываем ранее выбранного сотрудника //Show all employees when "All Teams" is selected??
+      setEmployeeId(null);
+      setSelectedEmployee({});
 
-        // В контекст устанавливаем id выбранной должности, или  null если все должности
-        setPositionId(numericPositionId || null)
+      const numericPositionId = Number(positionId) || null
+      // В контекст устанавливаем id выбранной должности, или  null если все должности
+      setPositionId(numericPositionId || null)
 
-        // Сбрасываем ранее выбранного сотрудника //Show all employees when "All Teams" is selected??
-        setEmployeeId(null);
-        setSelectedEmployee({});
+      // Выбираем должность
+      const selectedPosition = positions.find(position => position.id === numericPositionId)
 
-        // Выбираем должность
-        const selectedPosition = positions.find(position => position.id === numericPositionId)
+      // Устанавливаем Должность в контекст, и ее имя (?)
+      if (selectedPosition) {
 
-        // Устанавливаем Должность в контекст, и ее имя (?)
-        if (selectedPosition) {
+          // сбрасываем конкретную Команду
+          setTeamId(null)
 
-            // сбрасываем конкретную Команду
-            setTeamId(null)
+          setPositionName(selectedPosition.name || '')
+          setSelectedPosition(selectedPosition)
 
-            setPositionName(selectedPosition.name || '')
-            setSelectedPosition(selectedPosition)
-        } else if (selectedPosition === undefined) {
-            setSelectedPosition(null);
-        }
-     console.log('selectedPosition:',selectedPosition)
+          // СОРТИРУЕМ СПИСОК СОТРУДНИКОВ, ПО ДОЛЖНОСТИ (НЕ ПО КОМАНДЕ)
+          // Инициализирую контекст для employeesByPosition
+          const sortedEmployeesByPosition = employees.filter(employee => employee.position === selectedPosition.name)
+          // сохраняем в контекст employeesByPosition
+          // может зд. обобгатить поля _employee.percentage
+            setEmployeesByPosition(sortedEmployeesByPosition)
 
-
-        // СОРТИРУЕМ СПИСОК СОТРУДНИКОВ, ПО ДОЛЖНОСТИ (НЕ ПО КОМАНДЕ)
-        // Инициализирую контекст для employeesByPosition
-        const sortedEmployeesByPosition = employees.filter(employee => employee.position === selectedPosition.name)
-        // сохраняем в контекст _employees
-        // МОЖЕТ ЗДЕСЬ ОБОГАТИТЬ ПОЛЯ _employee.percentage
-        setEmployeesByPosition(sortedEmployeesByPosition) // !!! ТОГДА ОБРЕЗАЕТСЯ СПИСОК СОТРУДНИКИ В СЕЛЕКТЕ
-
-      console.log(sortedEmployeesByPosition)
+      } else if (selectedPosition === undefined) {
+          setSelectedPosition(null); // чтоб анулировать снова до полного списка сотрудников
+      }
     }
 
-    // console.log(onOpen)
     return (
         <PopupWithForm
             name={name}
@@ -183,7 +169,9 @@ function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
                     onChange={(e) => handleEmployeeChange(e.target.value)}
                     className={styles.select}
                 >
-                    <option value="allStaff" className={styles.optionDefault}>--Сотрудники--</option>
+                    <option
+                      value="allStaff"
+                      className={styles.optionDefault}>--Сотрудники--</option>
                     {(isTeamId === null
                             ? employees
                             : employees.filter(employee => employee.team === isTeamName)
@@ -204,9 +192,15 @@ function PopupMainMenu({ onOpen, onClose, name, onSubmit, textBtn }) {
                     onChange={(e) => handlePositionChange(e.target.value)}
                     className={styles.select}
                 >
-                    <option value="allPositions" className={styles.optionDefault}>--Должности--</option>
+                    <option
+                      value="allPositions"
+                      className={styles.optionDefault}>--Должности--</option>
                     { positions.map((position) => (
-                        <option key={position.id} value={position.id} className={styles.option}>
+                        <option
+                          key={position.id}
+                          value={position.id}
+                          className={styles.option}
+                        >
                             { position.name }
                         </option>
                     ))}

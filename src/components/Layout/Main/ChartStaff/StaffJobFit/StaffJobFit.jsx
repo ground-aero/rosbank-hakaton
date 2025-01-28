@@ -5,111 +5,133 @@ import { NoData } from '../../../../../icons'
 import { AppContext } from "../../../../../context/context"
 
 function StaffJobFit() {
-    const [isTeamSuitStaff, setTeamSuitStaff] = useState([]);
-    const [currentView, setCurrentView] = useState('teamStaff');
-    const {
-        employees,
-        isEmployeeId,
-        setEmployeeId,
-        selectedEmployee,
-        setSelectedEmployee,
-        employeesByPosition,
-        isTeamId,
-        isTeamName,
-        setTeamName,
-        setTeamTotal,
-        selectedPosition,
-        setSelectedPosition,
-    } = useContext(AppContext);
+  const [isTeamSuitStaff, setTeamSuitStaff] = useState([]);
+  const [currentView, setCurrentView] = useState('teamStaff');
+  const {
+    employees,
+    isEmployeeId,
+    setEmployeeId,
+    selectedEmployee,
+    setSelectedEmployee,
+    employeesByPosition,
+    isTeamId,
+    isTeamName,
+    setTeamName,
+    setTeamTotal,
+    selectedPosition,
+    setSelectedPosition,
+  } = useContext(AppContext);
 
-    // список сотрудников isTeamSuitStaff в зависимости от: isTeamId
-    const getTeamsIdSuitPosition = useCallback(async () => {
-        try {
-            if (isTeamId === null) {
-                let data = await api.getTeamsAllSuitPosition()
-                setTeamSuitStaff(data);
-                setTeamTotal(data?.length);
-                // setCurrentView('teamStaff');
-          // console.log(data)
-            } else if (isTeamId) {
-                let data = await api.getTeamsIdSuitPosition(isTeamId)
-                setTeamSuitStaff(data);
-                setTeamTotal(data?.length);
-                // setCurrentView('teamStaff');
-            }
-            // else if (selectedPosition) {
-            //
-            // }
-        } catch (err) {
-            console.error(err);
-        }
-    }, [isTeamId, setTeamTotal]);
+  // список сотрудников isTeamSuitStaff в зависимости от: isTeamId
+  const getTeamsIdSuitPosition = useCallback(async () => {
+    try {
+      if (isTeamId === null) {
+        let data = await api.getTeamsAllSuitPosition()
+        setTeamSuitStaff(data);
+        setTeamTotal(data?.length);
+        localStorage.setItem('suitStaff', JSON.stringify(data))
+      } else if (isTeamId) {
+        let data = await api.getTeamsIdSuitPosition(isTeamId)
+        setTeamSuitStaff(data);
+        setTeamTotal(data?.length);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }, [isTeamId, setTeamTotal]);
+ // console.log('isTeamSuitStaff:', isTeamSuitStaff)
 
-  console.log('isTeamSuitStaff:', isTeamSuitStaff)
+  useEffect(() => {
+    getTeamsIdSuitPosition();
+  }, [getTeamsIdSuitPosition]);
 
-    useEffect(() => {
-        getTeamsIdSuitPosition();
-    }, [getTeamsIdSuitPosition]);
+  // устанавливаем в контекст и в данный график isTeamName
+  const getTeamName = useCallback(async () => {
+    try {
+      if (isTeamId === null) {
+        setTeamName('');
+      } else {
+        let data = await api.getTeams(isTeamId)
+        const teamName = data.find((team) => team.id === isTeamId)
+        setTeamName(teamName.name);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }, [isTeamId, setTeamName]);
 
-    // устанавливаем в контекст и в данный график isTeamName
-    const getTeamName = useCallback(async () => {
-        try {
-            if (isTeamId === null) {
-                setTeamName('');
-            } else {
-                let data = await api.getTeams(isTeamId)
-                const teamName = data.find((team) => team.id === isTeamId)
-                setTeamName(teamName.name);
-            }
-        } catch (err) {
-            console.error(err);
-        }
-    }, [isTeamId, setTeamName]);
+  useEffect(() => {
+    getTeamName();
+  }, [getTeamName]);
 
-    useEffect(() => {
-        getTeamName();
-    }, [getTeamName]);
+  // по клику на строку, находим Сотрудника и обогащаем поля (из объекта employees),
+  // устанавливаем в контекст isSelectedEmployee
+  const handleRowClickStaff = useCallback((clickedEmployeeId, clickedEmployeeName) => {
+    if (Number(clickedEmployeeId) === Number(isEmployeeId)) {
+      setEmployeeId(null);
+      setSelectedEmployee(null);
+      setCurrentView('teamStaff');
+    } else {
+      setEmployeeId(clickedEmployeeId);
 
-    // по клику на строку, находим Сотрудника и обогащаем поля (из объекта employees),
-    // устанавливаем в контекст isSelectedEmployee
-    const handleRowClick = useCallback((clickedEmployeeId, clickedEmployeeName) => {
-        console.log("Clicked Employee ID, clickedEmployeeName:", clickedEmployeeId,clickedEmployeeName);
-        console.log("Current employees array:", employees);
+      // Находим сотрудника в массиве employees
+      const selectedEmployeeLocal = employees.find(employee => {
+        return Number(employee.id) === Number(clickedEmployeeId);
+      });
 
-        if (Number(clickedEmployeeId) === Number(isEmployeeId)) {
-            setEmployeeId(null);
-            setSelectedEmployee(null);
-            setCurrentView('teamStaff');
-        } else {
-            setEmployeeId(clickedEmployeeId);
+      // Разбиваем имя на ФИО
+      const [lastName, firstName] = clickedEmployeeName.split(' ');
 
-            // Находим сотрудника в массиве employees
-            const selectedEmployeeLocal = employees.find(employee => {
-                return Number(employee.id) === Number(clickedEmployeeId);
-            });
+      // Создаем объект с обогащенными полями из объекта employees
+      const employeeEnrichedObject = {
+        last_name: lastName,
+        first_name: firstName,
+        id: Number(clickedEmployeeId),
+        position: selectedEmployeeLocal?.position || '',
+        grade: selectedEmployeeLocal?.grade || '',
+        team: selectedEmployeeLocal?.team || ''
+      };
 
-         console.log("Found employee:", selectedEmployeeLocal);
+      setSelectedEmployee(employeeEnrichedObject);
+      setSelectedPosition(null)
+      setCurrentView('teamStaff');
+    }
+  }, [isEmployeeId, setEmployeeId, setSelectedEmployee, employees]);
 
-            // Разбиваем имя на ФИО
-            const [lastName, firstName] = clickedEmployeeName.split(' ');
+  // по клику на строку, находим Сотрудника отсортированного по должности и обогащаем поля (из объекта employees),
+  // устанавливаем в контекст isSelectedEmployee
+  const handleRowClickPositionStaff = useCallback((clickedEmployeeId, clickedEmployeeName) => {
 
-            // Создаем объект с обогащенными полями из объекта employees
-            const employeeEnrichedObject = {
-                last_name: lastName,
-                first_name: firstName,
-                id: Number(clickedEmployeeId),
-                position: selectedEmployeeLocal?.position || '',
-                grade: selectedEmployeeLocal?.grade || '',
-                team: selectedEmployeeLocal?.team || ''
-            };
+    if (Number(clickedEmployeeId) === Number(isEmployeeId)) {
+      setEmployeeId(null);
+      setSelectedEmployee(null);
+      setCurrentView('sortedPositionStaff');
+    } else {
+      setEmployeeId(clickedEmployeeId);
 
-          console.log("Created employee object:", employeeEnrichedObject);
+      // Находим сотрудника в массиве employees
+      const selectedEmployeeLocal = employees.find(employee => {
+        return Number(employee.id) === Number(clickedEmployeeId);
+      });
 
-            setSelectedEmployee(employeeEnrichedObject);
-            setSelectedPosition(null)
-            setCurrentView('teamStaff');
-        }
-    }, [isEmployeeId, setEmployeeId, setSelectedEmployee, employees]);
+      // Разбиваем имя на ФИО
+      const [lastName, firstName] = clickedEmployeeName.split(' ');
+
+      // Создаем объект с обогащенными полями из объекта employees
+      const employeeEnrichedObj = {
+        last_name: lastName,
+        first_name: firstName,
+        id: Number(clickedEmployeeId),
+        position: selectedEmployeeLocal?.position || '',
+        grade: selectedEmployeeLocal?.grade || '',
+        team: selectedEmployeeLocal?.team || ''
+      };
+
+      setSelectedEmployee(employeeEnrichedObj);
+      // setSelectedPosition(null)
+      setCurrentView('sortedPositionStaff');
+    }
+  }, [isEmployeeId, setEmployeeId, setSelectedEmployee ]);
 
   // Новый эффект для обработки выбора должности и команды
   useEffect(() => {
@@ -119,61 +141,79 @@ function StaffJobFit() {
         setTeamSuitStaff(employeesByPosition);
         setCurrentView('sortedPositionStaff');
       }, 500)
+      } else if (selectedPosition === null) {
 
-    } else if (isTeamId || isTeamName) {
-      // Only change to team view if no position is selected
-      getTeamsIdSuitPosition();
       setCurrentView('teamStaff');
-    }
+      const suitStaff = JSON.parse(localStorage.getItem('suitStaff'))
+      setTeamSuitStaff(suitStaff);
+      // можно обогатить поля suitStaff
+
+      } else if (isTeamId || isTeamName) {
+          // Only change to team view if no position is selected
+          getTeamsIdSuitPosition();
+          setCurrentView('teamStaff');
+        }
   }, [selectedPosition, isTeamId, isTeamName, employeesByPosition]);
-  // console.log('selectedPosition in_', selectedPosition)
-  console.log('CurrentView""":', currentView)
+ // console.log('CurrentView""", selectedPosition:::', currentView, selectedPosition)
 
-    return (
+  return (
+    <>
+      { currentView === 'teamStaff'
+      ? (
+          isTeamSuitStaff?.length === 0
+            ? (
+              <div className={globalStyles.tableNoDataBox}>
+                {/*<td colSpan="2" className={globalStyles.tableColLeft}>В фильтре выберите данные</td>*/}
+                <img src={NoData} className={globalStyles.noDataImg} alt="no data"/>
+              </div>
+            )
+            :
+            <table className={globalStyles.table}>
+              <tbody>
+                { isTeamSuitStaff.map((employee, i) => (
+                    <tr
+                      key={i}
+                      onClick={() => handleRowClickStaff(
+                        employee.employee_id,
+                        employee.employee
+                      )}
+                      className={`${globalStyles.tableRow} ${isEmployeeId === employee.employee_id ? globalStyles.tableRowSelected : ''}`}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <td className={globalStyles.tableColLeft}>{employee.employee}</td>
+                      <td className={globalStyles.tableColRight}>{`${employee.percentage}%`}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+        ) : ''
+      }
+
+      { currentView === 'sortedPositionStaff'
+        ?
         <table className={globalStyles.table}>
-
-            { currentView === 'teamStaff' &&
-                isTeamSuitStaff?.length === 0
-                    ? (
-                <div className={globalStyles.tableNoDataBox}>
-                  {/*<td colSpan="2" className={globalStyles.tableColLeft}>В фильтре выберите данные</td>*/}
-                  <img src={NoData} className={globalStyles.noDataImg} alt="no data"/>
-                </div>
-              ) : (
-                isTeamSuitStaff.map((employee, i) => (
-                        <tr
-                            key={i}
-                            onClick={() => handleRowClick(
-                                employee.employee_id,
-                                employee.employee
-                            )}
-                            className={`${globalStyles.tableRow} ${isEmployeeId === employee.employee_id ? globalStyles.tableRowSelected : ''}`}
-                            style={{ cursor: 'pointer' }}
-                        >
-                            <td className={globalStyles.tableColLeft}>{employee.employee}</td>
-                            <td className={globalStyles.tableColRight}>{`${employee.percentage}%`}</td>
-                        </tr>
-                      ))
-                    )
-            }
-
-            {currentView === 'sortedPositionStaff'
-              ?
-              (
-                <tr className={globalStyles.tableRow}>
-                  <td className={globalStyles.tableColLeft}>
-                    <p>here goes Staff filtered by Position </p>
-                    {/*{`${selectedEmployee.last_name} ${selectedEmployee.first_name}`}*/}
-                    {/*{selectedEmployee.position && ` - ${selectedEmployee.position}`}*/}
-                  </td>
+          <tbody>
+            { employeesByPosition.map((employee, i) => (
+                <tr key={i}
+                    onClick={() => handleRowClickPositionStaff(
+                      employee.id,
+          `${employee.last_name} ${employee.first_name}`
+                    )}
+                    className={`${globalStyles.tableRow} ${isEmployeeId === employee.id ? globalStyles.tableRowSelected : ''}`}
+                    style={{ cursor: 'pointer' }}>
+                  <td className={globalStyles.tableColLeft}>{`${employee.last_name} ${employee.first_name}`}</td>
                   {/*<td className={globalStyles.tableColRight}>{`${'percentage'}%`}</td>*/}
                 </tr>
-              )
-              : ''
+              ))
             }
-
+          </tbody>
         </table>
-    );
+        : ''
+      }
+
+    </>
+  );
 }
 
 export default StaffJobFit;

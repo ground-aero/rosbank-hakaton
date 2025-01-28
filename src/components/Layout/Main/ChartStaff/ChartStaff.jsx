@@ -10,7 +10,7 @@ function ChartStaff() {
     const [ activeTab, setActiveTab ] = useState('staffJobFit');
 
  // console.log('isTeamName, teams', "selectedEmployee:", isTeamName, teams, selectedEmployee)
-  console.log('selectedPosition, selectedEmployee::',selectedPosition, selectedEmployee)
+ // console.log('selectedPosition, selectedEmployee::',selectedPosition, selectedEmployee)
 
     // функция для отображения в поле Должность •
   const getSelectedPosition = (selectedPosition, selectedEmployee) => {
