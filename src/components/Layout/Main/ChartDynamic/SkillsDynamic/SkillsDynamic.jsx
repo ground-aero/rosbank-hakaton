@@ -1,11 +1,11 @@
 import { useState, useEffect, useContext, useCallback } from 'react'
 import axios from 'axios'
-import { TeamContext } from '../../../../../context/context'
+import { AppContext } from '../../../../../context/context'
 import { DB_URL } from "../../../../../utils/constants";
 import ChartDynamicSkills from '../../../../Charts/ChartDynamicSkills'
 
 function SkillsDynamic() {
-    const { isTeamId, selectedEmployee } = useContext(TeamContext);
+    const { isTeamId, selectedEmployee } = useContext(AppContext);
     const [ isFetchingData, setFetchingData] = useState(false)
     const [ isAllPoints, setAllPoints] = useState([])
 

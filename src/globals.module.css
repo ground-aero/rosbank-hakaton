@@ -15,6 +15,9 @@
   --background-quaternary: #42434B;
   --background-quaternary-hover: #57575d;
 
+  /*--border-gray: #cecece;*/
+  --table-header: #f9f9f9;
+
   --chart-bar-yellow: #FFDA7C;
 
   --primary-color: #0084C2;
@@ -43,7 +46,7 @@
   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
   sans-serif;  min-height: 100vh;
   background-color: var(--background-primary);
-  font-size: 12px; /* Базовый размер шрифта */
+  font-size: 15px; /* Базовый размер шрифта */
   font-weight: 400;
   line-height: 20px;
   color: var(--text-color-dark);
@@ -70,6 +73,7 @@ h1 {
 a {
   color: var(--primary-color);
   text-decoration: none;
+  display: flex;
 }
 
 .section {
@@ -99,7 +103,8 @@ a {
 }
 
 .chartSubtitle {
-  font-size: 10px;
+  font-size: 14px;
+  letter-spacing: -0.5px;
   padding-top: 3px;
 }
 
@@ -113,8 +118,11 @@ a {
 
 .chartSubtitleSpan {
   display: inline-block;
-  padding: 0 4px;
-  text-decoration: underline;
+  background-color: var(--table-header);
+  padding: 5px 4px;
+  border-radius: 5px;
+  border: 1px solid var(--text-color-light);
+  font-weight: 600;
 }
 
 .tabsChart {
@@ -152,13 +160,20 @@ a {
   padding-top: 24px;
   width: 100%;
   border-collapse: collapse;
-  border: 1px solid var(--text-color-middle);
+  /*border: 1px solid var(--text-color-light);*/
+}
+
+.tableHeader,
+.tableColLeft,
+.tableColRight {
+  padding: 6px 0 10px 12px;
+  text-align: left;
 }
 
 .tableHeader {
-  font-weight: 600;
-  background-color: var(--background-secondary);
-  border: 1px solid var(--text-color-middle);
+  margin-top: 10px;
+  background-color: var(--table-header);
+  border: 1px solid var(--text-color-light);
 }
 
 .tableHeaders {
@@ -178,24 +193,29 @@ a {
 
 .tableColLeft {
   width: 213px;
-  border-right: 1px solid var(--text-color-middle);
-  border-bottom: 1px solid var(--text-color-middle);
-}
-
-.tableHeader,
-.tableColLeft,
-.tableColRight {
-  padding: 6px 0 10px 12px;
-  text-align: left;
+  border-right: 1px solid var(--text-color-light);
+  border-bottom: 1px solid var(--text-color-light);
 }
 
 .tableRow {
-  border: 1px solid var(--text-color-middle);
+  border: 1px solid var(--text-color-light);
 }
 
 .tableRowSelected {
-  border: 2px solid var(--text-color-middle);
+  border: 2px solid var(--text-color-light);
   background-color: var(--background-primary);
+}
+
+.tableNoDataBox {
+  height: 150px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.noDataImg {
+  width: 70px;
 }
 
 .scrollableContent {

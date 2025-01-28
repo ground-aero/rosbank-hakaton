@@ -1,6 +1,8 @@
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import globalStyles from "../../globals.module.css";
+import {NoData} from "../../icons";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -12,7 +14,9 @@ const CHART_COLORS = [
 
 const ChartDoughnut = ({ data }) => {
     if (!data || data.length === 0) {
-        return <div>Нет данных для отображения</div>;
+        return <div className={globalStyles.tableNoDataBox}>
+            <img src={NoData} className={globalStyles.noDataImg} alt="no data"/>
+        </div>
     }
 
     const chartData = {

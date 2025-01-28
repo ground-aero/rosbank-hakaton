@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import {useState} from 'react'
 import Layout from './components/Layout/Layout'
 import NotFound from './components/NotFound/NotFound'
-import { TeamContext } from './context/context';
+import { AppContext } from './context/context';
 
 function App() {
   const [teams, setTeams] = useState([])
@@ -11,7 +11,8 @@ function App() {
   const [isTeamTotal, setTeamTotal] = useState(0)
   const [employees, setEmployees] = useState([])
   const [isEmployeeId, setEmployeeId] = useState(null)
-  const [selectedEmployee, setSelectedEmployee] = useState( {})
+  const [selectedEmployee, setSelectedEmployee] = useState( null || {})
+  const [employeesByPosition, setEmployeesByPosition] = useState( null || {})
   const [isBusFactor, setBusFactor] = useState(0)
   const [positions, setPositions] = useState([])
   const [selectedPosition, setSelectedPosition] = useState(null)
@@ -19,7 +20,7 @@ function App() {
 
   return (
       <>
-        <TeamContext.Provider value={{
+        <AppContext.Provider value={{
           teams,
           setTeams,
           isTeamId,
@@ -34,6 +35,8 @@ function App() {
           setEmployeeId,
           selectedEmployee,
           setSelectedEmployee,
+          employeesByPosition,
+          setEmployeesByPosition,
           isBusFactor,
           setBusFactor,
           positions,
@@ -50,7 +53,7 @@ function App() {
             </Route>
             <Route path='*' element={<NotFound/>}/>
           </Routes>
-        </TeamContext.Provider>
+        </AppContext.Provider>
       </>
   );
 }
