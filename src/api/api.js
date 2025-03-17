@@ -110,7 +110,7 @@ class Api {
     // data for MenuBar
     async getBusFactor(teamId) {
         try {
-            const response = await axios.get(`${DB_URL}/api/v1/dashboard/bus_factor/?team=${teamId}`, {
+            const response = await axios.get(`${DB_URL}/api/v1/dashboard/bus_factor`, { // ?team=${teamId}
                 params: {team: teamId}, // @params для добавления query параметров
                 headers: {
                     'Accept': 'application/json',
